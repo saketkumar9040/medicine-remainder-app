@@ -34,6 +34,19 @@ const styles = StyleSheet.create({
      padding:10,
      borderBottomColor:"#fff",
      borderBottomWidth:0.5,
+  },
+  timeContainer:{
+    flexDirection:"row",
+    alignItems:'center',
+  },
+  timeText:{
+     fontSize:18,
+     fontWeight:"800",
+     backgroundColor:"#fff",
+     padding:5,
+     paddingHorizontal:55,
+     marginRight:10,
+     borderRadius:10,
   }
 });
 
