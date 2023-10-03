@@ -97,18 +97,19 @@ const AddMedicineScreen = ({ navigation }) => {
           <Text style={styles.inputHeadingText}>
             Please select a time to get reminded ?
           </Text>
-          <View style={styles.timeContainer}>
-            <View>
+          <TouchableOpacity onPress={() => showTimepicker()}>
+            <View style={styles.timeContainer}>
               <Text style={styles.timeText}>
                 {date.getHours() % 12 > 0 ? date.getHours() % 12 : 12} :{" "}
-                {date.getMinutes() <10 ? "0"+date.getMinutes():date.getMinutes()} 
+                {date.getMinutes() < 10
+                  ? "0" + date.getMinutes()
+                  : date.getMinutes()}{" "}
                 {date.getHours() >= 12 ? "pm" : "am"}
               </Text>
+            <Ionicons name="alarm" size={40} color="#fff" />
             </View>
-            <TouchableOpacity onPress={() => showTimepicker()}>
-              <Ionicons name="alarm" size={40} color="#fff" />
-            </TouchableOpacity>
-          </View>
+
+          </TouchableOpacity>
           {show && (
             <DateTimePicker
               testID="dateTimePicker"
