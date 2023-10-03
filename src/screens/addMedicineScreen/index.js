@@ -7,6 +7,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -25,11 +26,12 @@ const dosesFrequencyList = [
 const AddMedicineScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [frequency, setFrequency] = useState("");
+  const [pillsCount, setPillsCount] = useState("0");
 
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
-  console.log(date.toLocaleTimeString());
+  //   console.log(date.toLocaleTimeString());
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -106,9 +108,8 @@ const AddMedicineScreen = ({ navigation }) => {
                   : date.getMinutes()}{" "}
                 {date.getHours() >= 12 ? "pm" : "am"}
               </Text>
-            <Ionicons name="alarm" size={40} color="#fff" />
+              <Ionicons name="alarm" size={40} color="#fff" />
             </View>
-
           </TouchableOpacity>
           {show && (
             <DateTimePicker
@@ -119,6 +120,22 @@ const AddMedicineScreen = ({ navigation }) => {
               onChange={onChange}
             />
           )}
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputHeadingText}>Pill's count ?</Text>
+          <TextInput
+            style={styles.textInputNumber}
+            placeholder="0"
+            keyboardType="numeric"
+            placeholderTextColor="#fff"
+            value={pillsCount}
+            onChangeText={(e) => {
+              e > 9
+                ? Alert.alert("sorry😣", "Max limit is 10")
+                : setPillsCount(e);
+            }}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

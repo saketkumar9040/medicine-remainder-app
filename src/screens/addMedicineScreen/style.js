@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   timeContainer:{
     flexDirection:"row",
     alignItems:'center',
+    elevation:10,
   },
   timeText:{
      fontSize:18,
@@ -47,6 +48,15 @@ const styles = StyleSheet.create({
      paddingHorizontal:30,
      marginRight:10,
      borderRadius:5,
+  },
+  textInputNumber:{
+    backgroundColor:'#fff',
+    paddingHorizontal:58,
+    padding:3,
+    alignSelf:"flex-start",
+    fontSize:18,
+    fontWeight:"800",
+    borderRadius:5,
   }
 });
 
