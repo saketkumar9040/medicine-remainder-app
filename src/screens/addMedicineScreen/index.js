@@ -25,10 +25,11 @@ const dosesFrequencyList = [
 const AddMedicineScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [frequency, setFrequency] = useState("");
-  const [date, setDate] = useState(new Date(8800000));
-  const [mode, setMode] = useState("date");
+
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  console.log(date)
+  console.log(date.toLocaleTimeString())
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -42,11 +43,11 @@ const AddMedicineScreen = ({ navigation }) => {
   };
 
   const showDatepicker = () => {
-    showMode("date");
+    showMode('date');
   };
 
   const showTimepicker = () => {
-    showMode("time");
+    showMode('time');
   };
 
   return (
@@ -110,10 +111,7 @@ const AddMedicineScreen = ({ navigation }) => {
               value={date}
               mode={mode}
             //   is24Hour={true}
-              onChange={(e)=>{
-                onChange();
-                console.log(e)
-            }}
+              onChange={onChange}
             />
           )}
         </View>
