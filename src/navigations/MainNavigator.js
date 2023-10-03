@@ -30,7 +30,7 @@ const TabsNavigator = () => {
         tabBarInactiveTintColor:"#fff",
       }}
     >
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="Doses List"
         component={ListScreen}
         options={{
@@ -43,7 +43,7 @@ const TabsNavigator = () => {
             />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="Add Medicine"
         component={AddMedicineScreen}
@@ -58,7 +58,7 @@ const TabsNavigator = () => {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
@@ -71,7 +71,7 @@ const TabsNavigator = () => {
             />
           ),
         }}
-      />
+      /> */}
     </Tabs.Navigator>
   );
 };
