@@ -52,6 +52,10 @@ const AddMedicineScreen = ({ navigation }) => {
     showMode("time");
   };
 
+  const submitHandler = () => {
+    
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.medicineImageContainer}>
@@ -137,10 +141,10 @@ const AddMedicineScreen = ({ navigation }) => {
             }}
           />
         </View>
-      <TouchableOpacity style={styles.submitContainer}>
-        <Text style={styles.submitText}>save</Text>
-        <Entypo name="save" size={24} color="#fff" />
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.submitContainer} onPress={()=>submitHandler()}>
+          <Text style={styles.submitText}>save</Text>
+          <Entypo name="save" size={24} color="#fff" />
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
