@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     justifyContent:'center'
   },
   medicineImage: {
-    height: 200,
-    width: 200,
+    height: 180,
+    width: 180,
     resizeMode:"center"
   },
   inputContainer:{
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     marginVertical:5,
   },
   inputHeadingText:{
-    fontSize:22,
+    fontSize:20,
     color:"#fff",
     fontWeight:"700"
   },
@@ -57,6 +57,24 @@ const styles = StyleSheet.create({
     fontSize:18,
     fontWeight:"800",
     borderRadius:5,
+  },
+  submitContainer:{
+    backgroundColor:"#00ff7f",
+    flexDirection:"row",
+    alignItems:"center",
+    justifyContent:"center",
+    paddingHorizontal:30,
+    marginTop:20,
+    alignSelf:"center",
+    padding:5,
+    paddingHorizontal:60,
+    borderRadius:10,
+  },
+  submitText:{
+    fontSize:22,
+    fontWeight:"800",
+    letterSpacing:1,
+    color:"#fff"
   }
 });
 

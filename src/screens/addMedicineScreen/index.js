@@ -14,7 +14,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 import medicineImage from "../../../assets/images/medicineImage.png";
 import styles from "./style";
-import { Ionicons } from "@expo/vector-icons";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 const dosesFrequencyList = [
   "Once Daily",
   "Twice Daily",
@@ -137,6 +137,10 @@ const AddMedicineScreen = ({ navigation }) => {
             }}
           />
         </View>
+      <TouchableOpacity style={styles.submitContainer}>
+        <Text style={styles.submitText}>save</Text>
+        <Entypo name="save" size={24} color="#fff" />
+      </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
