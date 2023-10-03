@@ -43,10 +43,10 @@ const styles = StyleSheet.create({
      fontSize:18,
      fontWeight:"800",
      backgroundColor:"#fff",
-     padding:5,
-     paddingHorizontal:55,
+     padding:3,
+     paddingHorizontal:75,
      marginRight:10,
-     borderRadius:10,
+     borderRadius:5,
   }
 });
 

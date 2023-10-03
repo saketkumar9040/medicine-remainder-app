@@ -25,12 +25,10 @@ const dosesFrequencyList = [
 const AddMedicineScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [frequency, setFrequency] = useState("");
-
-  console.log(frequency);
-
-  const [date, setDate] = useState(new Date(Date.now()));
+  const [date, setDate] = useState(new Date(8800000));
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
+  console.log(date)
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -100,7 +98,7 @@ const AddMedicineScreen = ({ navigation }) => {
           </Text>
           <View style={styles.timeContainer}>
             <View >
-              <Text style={styles.timeText}>select time</Text>
+              <Text style={styles.timeText}>{date.getHours()} : {date.getMinutes()}</Text>
             </View>
             <TouchableOpacity onPress={() => showTimepicker()}>
             <Ionicons name="alarm" size={40} color="#fff" />
@@ -111,8 +109,11 @@ const AddMedicineScreen = ({ navigation }) => {
               testID="dateTimePicker"
               value={date}
               mode={mode}
-              is24Hour={true}
-              onChange={onChange}
+            //   is24Hour={true}
+              onChange={(e)=>{
+                onChange();
+                console.log(e)
+            }}
             />
           )}
         </View>
