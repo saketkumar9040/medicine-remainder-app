@@ -11,10 +11,11 @@ import {
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { Entypo, Ionicons } from "@expo/vector-icons";
+import axios from "axios";
 
 import medicineImage from "../../../assets/images/medicineImage.png";
 import styles from "./style";
-import { Entypo, Ionicons } from "@expo/vector-icons";
 const dosesFrequencyList = [
   "Once Daily",
   "Twice Daily",
@@ -31,7 +32,7 @@ const AddMedicineScreen = ({ navigation }) => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
-  //   console.log(date.toLocaleTimeString());
+  // console.log(date);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -52,9 +53,26 @@ const AddMedicineScreen = ({ navigation }) => {
     showMode("time");
   };
 
-  const submitHandler = () => {
-    
-  }
+  const submitHandler = async () => {
+    try {
+      const saveData = await axios.post(
+        "http://192.168.29.126:3000/addRemainder",
+        {
+          name,
+          frequency,
+          time: date,
+          pillsCount,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -141,7 +159,10 @@ const AddMedicineScreen = ({ navigation }) => {
             }}
           />
         </View>
-        <TouchableOpacity style={styles.submitContainer} onPress={()=>submitHandler()}>
+        <TouchableOpacity
+          style={styles.submitContainer}
+          onPress={() => submitHandler()}
+        >
           <Text style={styles.submitText}>save</Text>
           <Entypo name="save" size={24} color="#fff" />
         </TouchableOpacity>
