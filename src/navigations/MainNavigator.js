@@ -16,40 +16,60 @@ const TabsNavigator = () => {
         // tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "#4c4c4c",
-          height:60,
-          alignItems:"center",
-          justifyContent:"center",
-          paddingVertical:7,
+          height: 60,
+          alignItems: "center",
+          justifyContent: "center",
+          paddingVertical: 7,
         },
-        tabBarLabelStyle:{
-            fontSize:14,
-            fontWeight:"800",
-            marginBottom:5,
+        tabBarLabelStyle: {
+          fontSize: 13,
+          fontWeight: "800",
+          marginBottom: 5,
         },
+        tabBarActiveTintColor: "#00FF7F",
+        tabBarInactiveTintColor:"#fff",
       }}
     >
       <Tabs.Screen
         name="Doses List"
         component={ListScreen}
-        options={{ 
-            headerShown: false,
-            tabBarIcon:()=><FontAwesome5 name="notes-medical" size={24} color="#fff" />
-         }}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome5
+              name="notes-medical"
+              size={24}
+              color={focused ? "#00FF7F" : "#fff"}
+            />
+          ),
+        }}
       />
       <Tabs.Screen
         name="Add Medicine"
         component={AddMedicineScreen}
-        options={{ 
-            headerShown: false,
-            tabBarIcon:()=><Ionicons name="ios-add-circle-sharp" size={24} color="#fff" />
+        options={{
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <FontAwesome5
+              name="capsules"
+              size={24}
+              color={focused ? "#00FF7F" : "#fff"}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{ 
-            headerShown: false,
-            tabBarIcon:()=><FontAwesome name="user" size={24} color="#fff" />
+        options={{
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <FontAwesome
+              name="user"
+              size={24}
+              color={focused ? "#00FF7F" : "#fff"}
+            />
+          ),
         }}
       />
     </Tabs.Navigator>
