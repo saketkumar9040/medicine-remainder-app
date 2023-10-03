@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Image, TextInput } from "react-native";
+import { View, Text, SafeAreaView, Image, TextInput, ScrollView } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import React, { useState } from "react";
 
@@ -7,7 +7,7 @@ import medicineImage from "../../../assets/images/medicineImage.png";
 const countries = [
   "Once Daily",
   "Twice Daily",
-  "Thrice Dailly",
+  "Thrice Daily",
   "Weekly",
   "Monthly",
 ];
@@ -23,6 +23,7 @@ const AddMedicineScreen = ({navigation}) => {
       <View style={styles.medicineImageContainer}>
         <Image style={styles.medicineImage} source={medicineImage} />
       </View>
+      <ScrollView>
       <View style={styles.inputContainer}>
         <Text style={styles.inputHeadingText}>
           Write name of the Medicine you want to get remainded for ?
@@ -43,14 +44,30 @@ const AddMedicineScreen = ({navigation}) => {
         </Text>
         <SelectDropdown
           data={countries}
+          defaultValueByIndex={0}
           onSelect={(selectedItem, index) => {
             setFrequency(selectedItem)
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
           }}
+          buttonStyle={{
+            marginTop:20,
+            height:30,
+          }}
+          buttonTextStyle={{
+            fontWeight:"900"
+          }}
+
         />
       </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputHeadingText}>
+          Please select a time to get reminded ?
+        </Text>
+         
+      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
