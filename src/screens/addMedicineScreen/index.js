@@ -27,9 +27,9 @@ const AddMedicineScreen = ({ navigation }) => {
   const [frequency, setFrequency] = useState("");
 
   const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
-  console.log(date.toLocaleTimeString())
+  console.log(date.toLocaleTimeString());
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -43,11 +43,11 @@ const AddMedicineScreen = ({ navigation }) => {
   };
 
   const showDatepicker = () => {
-    showMode('date');
+    showMode("date");
   };
 
   const showTimepicker = () => {
-    showMode('time');
+    showMode("time");
   };
 
   return (
@@ -98,11 +98,15 @@ const AddMedicineScreen = ({ navigation }) => {
             Please select a time to get reminded ?
           </Text>
           <View style={styles.timeContainer}>
-            <View >
-              <Text style={styles.timeText}>{date.getHours()} : {date.getMinutes()}</Text>
+            <View>
+              <Text style={styles.timeText}>
+                {date.getHours() % 12 > 0 ? date.getHours() % 12 : 12} :{" "}
+                {date.getMinutes() <10 ? "0"+date.getMinutes():date.getMinutes()} 
+                {date.getHours() >= 12 ? "pm" : "am"}
+              </Text>
             </View>
             <TouchableOpacity onPress={() => showTimepicker()}>
-            <Ionicons name="alarm" size={40} color="#fff" />
+              <Ionicons name="alarm" size={40} color="#fff" />
             </TouchableOpacity>
           </View>
           {show && (
@@ -110,7 +114,7 @@ const AddMedicineScreen = ({ navigation }) => {
               testID="dateTimePicker"
               value={date}
               mode={mode}
-            //   is24Hour={true}
+              //   is24Hour={true}
               onChange={onChange}
             />
           )}
