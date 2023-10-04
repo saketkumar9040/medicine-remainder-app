@@ -30,11 +30,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontWeight: "800",
-    color: "#fff",
+    color: "#00ff7f",
     padding: 10,
     paddingHorizontal: 20,
     borderBottomColor: "#fff",
     borderBottomWidth: 0.5,
+    
   },
   textInputNumber: {
     backgroundColor: "#fff",
@@ -46,8 +47,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   image: {
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
     resizeMode: "center",
   },
   submitContainer: {

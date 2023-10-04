@@ -23,16 +23,21 @@
         "backgroundColor": "#000000"
       }
     },
-    "androidNavigationBar":{
-        "backgroundColor":"#000000",
-         "barStyle":"light-content"
+    "androidNavigationBar": {
+      "backgroundColor": "#000000",
+      "barStyle": "light-content"
     },
-    "androidStatusBar":{
-      "backgroundColor":"#000000",
-      "barStyle":"light-content"
+    "androidStatusBar": {
+      "backgroundColor": "#000000",
+      "barStyle": "light-content"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "23b83f29-392c-40b5-a048-399a24df442e"
+      }
     }
   }
 }

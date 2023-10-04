@@ -5,6 +5,8 @@ import ListScreen from "../screens/listScreen";
 import AddMedicineScreen from "../screens/addMedicineScreen";
 import ProfileScreen from "../screens/profileScreen";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import * as Updates from "expo-updates";
+import { useEffect } from "react";
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -27,7 +29,7 @@ const TabsNavigator = () => {
           marginBottom: 5,
         },
         tabBarActiveTintColor: "#00FF7F",
-        tabBarInactiveTintColor:"#fff",
+        tabBarInactiveTintColor: "#fff",
       }}
     >
       {/* <Tabs.Screen
@@ -63,7 +65,7 @@ const TabsNavigator = () => {
         component={ProfileScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <FontAwesome
               name="user"
               size={24}
@@ -77,6 +79,32 @@ const TabsNavigator = () => {
 };
 
 const MainNavigator = () => {
+  //  IMPLEMENTING EXPO - UPDATES   ===================================================>
+
+  useEffect(() => {
+    onFetchUpdateAsync();
+  }, []);
+
+  async function onFetchUpdateAsync() {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        await Updates.reloadAsync();
+      }
+    } catch (error) {
+      if (
+        error.message ===
+        "You cannot check for updates in development mode. To test manual updates, publish your project using `expo publish` and open the published version in this development client."
+      ) {
+        console.log(error.message);
+      } else {
+        alert(`Error fetching latest Expo update: ${error}`);
+      }
+    }
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
