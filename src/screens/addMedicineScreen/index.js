@@ -30,9 +30,8 @@ const AddMedicineScreen = ({ navigation }) => {
   const [pillsCount, setPillsCount] = useState("");
   const [pillsStock, setPillsStock] = useState("");
   const [caretakerNumber, setCaretakerNumber] = useState("");
-  console.log(caretakerNumber)
 
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date(3598050630000));
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   // console.log(date);
@@ -58,6 +57,18 @@ const AddMedicineScreen = ({ navigation }) => {
 
   const submitHandler = async () => {
     try {
+      if(name===""){
+        return Alert.alert("Medicine name cannot be blank");
+      }
+      if(date=== new Date(1598051730000)){
+        return Alert.alert("Please select a date for remainder");
+      }
+      if(pillsCount===""){
+        return Alert.alert("Please select no of pills ");
+      }
+      if(pillsStock===""){
+        return Alert.alert("Please select pills in stock with you");
+      }
       const saveData = await axios.post(
         "http://192.168.29.126:3000/addRemainder",
         {
@@ -141,7 +152,7 @@ const AddMedicineScreen = ({ navigation }) => {
           {show && (
             <DateTimePicker
               testID="dateTimePicker"
-              value={date}
+              value={date??""}
               mode={mode}
               //   is24Hour={true}
               onChange={onChange}
