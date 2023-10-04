@@ -28,6 +28,9 @@ const AddMedicineScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [frequency, setFrequency] = useState("");
   const [pillsCount, setPillsCount] = useState("0");
+  const [pillsStock, setPillsStock] = useState("0");
+  const [caretakerNumber, setCaretakerNumber] = useState("");
+  console.log(caretakerNumber)
 
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState("date");
@@ -62,6 +65,8 @@ const AddMedicineScreen = ({ navigation }) => {
           frequency,
           time: date,
           pillsCount,
+          pillsStock,
+          caretakerNumber
         },
         {
           headers: {
@@ -86,7 +91,7 @@ const AddMedicineScreen = ({ navigation }) => {
           </Text>
           <TextInput
             style={styles.textInput}
-            placeholder="Name"
+            placeholder="Enter medicine name "
             placeholderTextColor="#fff"
             value={name}
             onChangeText={(e) => {
@@ -145,7 +150,9 @@ const AddMedicineScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.inputHeadingText}>Pill's count to take each time ?</Text>
+          <Text style={styles.inputHeadingText}>
+            Pill's count to take each time ?
+          </Text>
           <TextInput
             style={styles.textInputNumber}
             placeholder="0"
@@ -166,15 +173,29 @@ const AddMedicineScreen = ({ navigation }) => {
             placeholder="0"
             keyboardType="numeric"
             placeholderTextColor="#fff"
-            value={pillsCount}
+            value={pillsStock}
             onChangeText={(e) => {
-              e > 9
-                ? Alert.alert("sorry😣", "Max limit is 10")
-                : setPillsCount(e);
+              setPillsStock(e);
             }}
           />
         </View>
-      </ScrollView>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputHeadingText}>
+            To assign a caretaker , provide number ?{`(optional)`}
+          </Text>
+          <TextInput
+            style={styles.textInputPhone}
+            placeholder="Enter number"
+            keyboardType="numeric"
+            placeholderTextColor="#fff"
+            value={caretakerNumber}
+            onChangeText={(e) => {
+              e.length > 10
+                ? Alert.alert("sorry😕", "number should be of 10 digits")
+                : setCaretakerNumber(e);
+            }}
+          />
+        </View>
         <TouchableOpacity
           style={styles.submitContainer}
           onPress={() => submitHandler()}
@@ -182,6 +203,7 @@ const AddMedicineScreen = ({ navigation }) => {
           <Text style={styles.submitText}>save</Text>
           <Entypo name="save" size={24} color="#fff" />
         </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 };

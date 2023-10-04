@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
      fontSize:20,
      fontWeight:"800",
      color:"#fff",
-     padding:10,
+     padding:5,
      borderBottomColor:"#fff",
      borderBottomWidth:0.5,
   },
@@ -69,16 +69,23 @@ const styles = StyleSheet.create({
     padding:3,
     paddingHorizontal:20,
     borderRadius:10,
-    position:"absolute",
-    bottom:30,
-    right:10
   },
   submitText:{
     fontSize:22,
     fontWeight:"800",
     letterSpacing:1,
     color:"#fff"
-  }
+  },
+  textInputPhone:{
+    backgroundColor:'#fff',
+    paddingHorizontal:10,
+    padding:5,
+    alignSelf:"flex-start",
+    fontSize:18,
+    fontWeight:"800",
+    borderRadius:5,
+    width:250
+  },
 });
 
 export default styles;
