@@ -27,8 +27,8 @@ const dosesFrequencyList = [
 const AddMedicineScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [frequency, setFrequency] = useState("");
-  const [pillsCount, setPillsCount] = useState("0");
-  const [pillsStock, setPillsStock] = useState("0");
+  const [pillsCount, setPillsCount] = useState("");
+  const [pillsStock, setPillsStock] = useState("");
   const [caretakerNumber, setCaretakerNumber] = useState("");
   console.log(caretakerNumber)
 
@@ -157,10 +157,10 @@ const AddMedicineScreen = ({ navigation }) => {
             style={styles.textInputNumber}
             placeholder="0"
             keyboardType="numeric"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#000"
             value={pillsCount}
             onChangeText={(e) => {
-              e > 9
+              e > 100
                 ? Alert.alert("sorry😣", "Max limit is 10")
                 : setPillsCount(e);
             }}
@@ -172,7 +172,7 @@ const AddMedicineScreen = ({ navigation }) => {
             style={styles.textInputNumber}
             placeholder="0"
             keyboardType="numeric"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#000"
             value={pillsStock}
             onChangeText={(e) => {
               setPillsStock(e);
@@ -187,7 +187,7 @@ const AddMedicineScreen = ({ navigation }) => {
             style={styles.textInputPhone}
             placeholder="Enter number"
             keyboardType="numeric"
-            placeholderTextColor="#fff"
+            placeholderTextColor="#000"
             value={caretakerNumber}
             onChangeText={(e) => {
               e.length > 10
