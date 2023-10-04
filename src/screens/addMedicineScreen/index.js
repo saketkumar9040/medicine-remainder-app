@@ -16,6 +16,7 @@ import axios from "axios";
 
 import medicineImage from "../../../assets/images/medicineImage.png";
 import styles from "./style";
+import { postRequest } from "../../utils/apiCallsHandler";
 const dosesFrequencyList = [
   "Once Daily",
   "Twice Daily",
@@ -25,7 +26,7 @@ const dosesFrequencyList = [
 ];
 
 const AddMedicineScreen = ({ navigation }) => {
-  const [name, setName] = useState("");
+  const [medicineName, SetMedicineName] = useState("");
   const [frequency, setFrequency] = useState("");
   const [pillsCount, setPillsCount] = useState("");
   const [pillsStock, setPillsStock] = useState("");
@@ -57,7 +58,7 @@ const AddMedicineScreen = ({ navigation }) => {
 
   const submitHandler = async () => {
     try {
-      if(name===""){
+      if(medicineName===""){
         return Alert.alert("Medicine name cannot be blank");
       }
       if(date=== new Date(1598051730000)){
@@ -69,22 +70,24 @@ const AddMedicineScreen = ({ navigation }) => {
       if(pillsStock===""){
         return Alert.alert("Please select pills in stock with you");
       }
-      const saveData = await axios.post(
-        "http://192.168.29.126:3000/addRemainder",
-        {
-          name,
-          frequency,
-          time: date,
-          pillsCount,
-          pillsStock,
-          caretakerNumber
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const saveRemainder = await postRequest("addRemainder",{
+         medicineName,
+         frequency,
+         time:date,
+         pillsCount,
+         pillsStock,
+         caretakerNumber
+      });
+      Alert.alert(`${saveRemainder.message}`);
+      if(saveRemainder.success == true){
+        SetMedicineName("");
+        setDate(new Date(3598050630000));
+        setFrequency(dosesFrequencyList[0])
+        setPillsCount("");
+        setPillsStock("");
+        setCaretakerNumber("")
+        navigation.navigate("Doses List");
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -104,9 +107,9 @@ const AddMedicineScreen = ({ navigation }) => {
             style={styles.textInput}
             placeholder="Enter medicine name "
             placeholderTextColor="#fff"
-            value={name}
+            value={medicineName}
             onChangeText={(e) => {
-              setName(e);
+              SetMedicineName(e);
             }}
           />
         </View>
