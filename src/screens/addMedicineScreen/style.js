@@ -67,8 +67,11 @@ const styles = StyleSheet.create({
     marginTop:20,
     alignSelf:"center",
     padding:3,
-    paddingHorizontal:60,
+    paddingHorizontal:20,
     borderRadius:10,
+    position:"absolute",
+    bottom:30,
+    right:10
   },
   submitText:{
     fontSize:22,

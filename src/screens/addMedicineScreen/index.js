@@ -145,7 +145,7 @@ const AddMedicineScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.inputHeadingText}>Pill's count ?</Text>
+          <Text style={styles.inputHeadingText}>Pill's count to take each time ?</Text>
           <TextInput
             style={styles.textInputNumber}
             placeholder="0"
@@ -159,6 +159,22 @@ const AddMedicineScreen = ({ navigation }) => {
             }}
           />
         </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputHeadingText}>Total pill's in stock ?</Text>
+          <TextInput
+            style={styles.textInputNumber}
+            placeholder="0"
+            keyboardType="numeric"
+            placeholderTextColor="#fff"
+            value={pillsCount}
+            onChangeText={(e) => {
+              e > 9
+                ? Alert.alert("sorry😣", "Max limit is 10")
+                : setPillsCount(e);
+            }}
+          />
+        </View>
+      </ScrollView>
         <TouchableOpacity
           style={styles.submitContainer}
           onPress={() => submitHandler()}
@@ -166,7 +182,6 @@ const AddMedicineScreen = ({ navigation }) => {
           <Text style={styles.submitText}>save</Text>
           <Entypo name="save" size={24} color="#fff" />
         </TouchableOpacity>
-      </ScrollView>
     </SafeAreaView>
   );
 };
