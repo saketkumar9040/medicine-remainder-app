@@ -107,6 +107,7 @@ const AddMedicineScreen = ({ navigation }) => {
             style={styles.textInput}
             placeholder="Enter medicine name "
             placeholderTextColor="#fff"
+            autoCapitalize="none"
             value={medicineName}
             onChangeText={(e) => {
               SetMedicineName(e);
@@ -136,6 +137,7 @@ const AddMedicineScreen = ({ navigation }) => {
             }}
           />
         </View>
+
         <View style={styles.inputContainer}>
           <Text style={styles.inputHeadingText}>
             Please select a time to get reminded ?
@@ -155,7 +157,7 @@ const AddMedicineScreen = ({ navigation }) => {
           {show && (
             <DateTimePicker
               testID="dateTimePicker"
-              value={date??""}
+              value={date}
               mode={mode}
               //   is24Hour={true}
               onChange={onChange}

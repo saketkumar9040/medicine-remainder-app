@@ -30,7 +30,7 @@ const TabsNavigator = () => {
         tabBarInactiveTintColor:"#fff",
       }}
     >
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="Doses List"
         component={ListScreen}
         options={{
@@ -57,7 +57,7 @@ const TabsNavigator = () => {
             />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="Profile"
         component={ProfileScreen}
