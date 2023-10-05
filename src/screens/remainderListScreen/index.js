@@ -5,7 +5,7 @@ import { Entypo,} from "@expo/vector-icons";
 import styles from "./style";
 import emptyScreenImage from "../../../assets/images/reminderScreenImage.png";
 
-const RemainderListScreen = () => {
+const RemainderListScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.mainContainer}>
 
@@ -17,7 +17,7 @@ const RemainderListScreen = () => {
         
       <TouchableOpacity
           style={styles.addButtonContainer}
-          onPress={() => submitHandler()}
+          onPress={() => navigation.navigate("Add Remainder")}
         >
           <Entypo name="add-to-list" size={34} color="#fff" />
         </TouchableOpacity>
