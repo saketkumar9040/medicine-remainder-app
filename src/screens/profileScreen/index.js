@@ -27,7 +27,7 @@ import DeviceInfo from "react-native-device-info";
 
 const ProfileScreen = () => {
   const [userName, setUserName] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("select");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [watsAppNumber, setWatsAppNumber] = useState("");
@@ -40,17 +40,18 @@ const ProfileScreen = () => {
   const getUserDetails = async () => {
     try {
       const userData = await postRequest("getUserDetails",{deviceId:DeviceInfo.getUniqueIdSync()});
+      console.log(userData.data)
       if(userData.data.email){
         setEmail(userData.data.email)
       }     
       if(userData.data.gender){
         setGender(userData.data.gender)
       }     
-      if(userData.data.name){
-        setUserName(userData.data.name)
+      if(userData.data.userName){
+        setUserName(userData.data.userName)
       }     
       if(userData.data.phone){
-        setPhone(userData.data.Phone)
+        setPhone(userData.data.phone)
       }     
       if(userData.data.watsAppNumber){
         setWatsAppNumber(userData.data.watsAppNumber)
@@ -125,7 +126,7 @@ const ProfileScreen = () => {
         <Text style={{ ...styles.inputHeadingText, flex: 1 }}>Gender</Text>
         <SelectDropdown
           data={genderList}
-          // defaultValueByIndex={0}
+          defaultValue={gender}
           defaultButtonText="select"
           onSelect={(selectedItem, index) => {
             setGender(selectedItem);
@@ -166,7 +167,7 @@ const ProfileScreen = () => {
           placeholder="Enter phone number"
           keyboardType="numeric"
           placeholderTextColor="#00ff7f"
-          value={phone}
+          value={phone?.toString()}
           onChangeText={(e) => {
             e.length > 11
               ? Alert.alert("Phone number should be 10 digits")
@@ -182,7 +183,7 @@ const ProfileScreen = () => {
           placeholder="Enter watsApp number"
           keyboardType="numeric"
           placeholderTextColor="#00ff7f"
-          value={watsAppNumber}
+          value={watsAppNumber?.toString()}
           onChangeText={(e) => {
             e.length > 11
               ? Alert.alert("WatsApp number should be 10 digits")
