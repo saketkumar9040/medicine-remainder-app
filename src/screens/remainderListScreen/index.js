@@ -3,7 +3,7 @@ import React from 'react';
 
 import styles from './style';
 
-const ListScreen = () => {
+const RemainderListScreen = () => {
   return (
 <SafeAreaView style={styles.mainContainer}>
 
@@ -11,4 +11,4 @@ const ListScreen = () => {
   )
 }
 
-export default ListScreen
+export default RemainderListScreen;

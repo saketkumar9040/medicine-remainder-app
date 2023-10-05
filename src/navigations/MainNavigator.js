@@ -1,94 +1,85 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import * as Updates from "expo-updates";
-import { useEffect } from "react";
-import DeviceInfo from 'react-native-device-info';
-import 'expo-dev-client';
-
-import ListScreen from "../screens/listScreen";
-import AddMedicineScreen from "../screens/addMedicineScreen";
-import ProfileScreen from "../screens/profileScreen";
+import { useEffect, useState } from "react";
+import { Alert } from "react-native";
+import DeviceInfo from "react-native-device-info";
+import "expo-dev-client";
+import messaging from "@react-native-firebase/messaging";
+import TabsNavigator from "./TabsNavigator.js"
+import { postRequest } from "../utils/apiCallsHandler";
 
 const Stack = createNativeStackNavigator();
-const Tabs = createBottomTabNavigator();
 
-const TabsNavigator = () => {
-  return (
-    <Tabs.Navigator
-      screenOptions={{
-        // tabBarShowLabel: false,
-        tabBarStyle: {
-          backgroundColor: "#4c4c4c",
-          height: 60,
-          alignItems: "center",
-          justifyContent: "center",
-          paddingVertical: 7,
-        },
-        tabBarLabelStyle: {
-          fontSize: 13,
-          fontWeight: "800",
-          marginBottom: 5,
-        },
-        tabBarActiveTintColor: "#00FF7F",
-        tabBarInactiveTintColor: "#fff",
-      }}
-    >
-      {/* <Tabs.Screen
-        name="Doses List"
-        component={ListScreen}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <FontAwesome5
-              name="notes-medical"
-              size={24}
-              color={focused ? "#00FF7F" : "#fff"}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Add Medicine"
-        component={AddMedicineScreen}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({focused}) => (
-            <FontAwesome5
-              name="capsules"
-              size={24}
-              color={focused ? "#00FF7F" : "#fff"}
-            />
-          ),
-        }}
-      /> */}
-      <Tabs.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ focused }) => (
-            <FontAwesome
-              name="user"
-              size={24}
-              color={focused ? "#00FF7F" : "#fff"}
-            />
-          ),
-        }}
-      />
-    </Tabs.Navigator>
-  );
-};
 
 const MainNavigator = () => {
+  const [deviceId, setDeviceId] = useState();
+  const [FCMToken, setFCMToken] = useState("");
 
-  const deviceId = DeviceInfo.getUniqueIdSync();
-  console.log(deviceId)
-  //  IMPLEMENTING EXPO - UPDATES   ===================================================>
+  //  FIREBASE CLOUD MESSAGING  ==========================================================>
+
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log("Authorization status:", authStatus);
+    }
+  }
+
   useEffect(() => {
     onFetchUpdateAsync();
+
+    if (requestUserPermission()) {
+      // RETURN FCM TOKEN FOR THE DEVICE ==================================================>
+      const FCMToken = messaging()
+        .getToken()
+        .then(async (token) => {
+          setFCMToken(token);
+          await createUser(DeviceInfo.getUniqueIdSync(), token);
+        });
+    } else {
+      console.log("Failed token status", authStatus);
+    }
+
+    // CHECK WHETHER INITIAL NOTIFICATION IS AVAILABLE =======================================>
+
+    messaging()
+      .getInitialNotification()
+      .then((remoteMessage) => {
+        if (remoteMessage) {
+          console.log(
+            "Notification caused app to open from quit state:",
+            remoteMessage.notification
+          );
+        }
+      });
+
+    // Assume a message-notification contains a "type" property in the data payload of the screen to open
+    messaging().onNotificationOpenedApp((remoteMessage) => {
+      console.log(
+        "Notification caused app to open from background state:",
+        remoteMessage.notification
+      );
+    });
+
+    // Register background handler   ============================================================>
+    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+      console.log("Message handled in the background!", remoteMessage);
+    });
+
+    //  FOREGROUND STATE  MESSAGE  ==============================================================>
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      Alert.alert("A new FCM message arrived!", JSON.stringify(remoteMessage));
+    });
+    return unsubscribe;
+
+    createUser();
   }, []);
+
+  //  IMPLEMENTING EXPO - UPDATES   ==============================================================>
 
   async function onFetchUpdateAsync() {
     try {
@@ -104,19 +95,29 @@ const MainNavigator = () => {
         "You cannot check for updates in development mode. To test manual updates, publish your project using `expo publish` and open the published version in this development client."
       ) {
         console.log(error.message);
-      } 
+      }
       if (
         error.message ===
         "You cannot check for updates in development mode. To test manual updates, make a release build with `npm run ios --configuration Release` or `npm run android --variant Release`."
       ) {
-        console.log(error.message); 
-      } 
-      else {
+        console.log(error.message);
+      } else {
         // console.log(error.message)
         alert(`Error fetching latest Expo update: ${error.message}`);
       }
     }
   }
+
+  //  CREATING/FETCHING USER WHEN USER ENTER APP  ==================================================>
+
+  const createUser = async (deviceId, FCMToken) => {
+    try {
+      const create = await postRequest("createUser", { deviceId, FCMToken });
+      console.log(create.message);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <NavigationContainer>
