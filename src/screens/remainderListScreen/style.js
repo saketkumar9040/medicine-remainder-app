@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         backgroundColor:"#000"
     },
     imageContainer:{
-        flex:1,
+        marginVertical:80,
         alignItems:"center",
         justifyContent:"center"
     },
@@ -16,13 +16,21 @@ const styles = StyleSheet.create({
         height:300,
         resizeMode:"stretch"
     },
-      addButtonContainer:{
+    addButtonContainer:{
         backgroundColor:"#00ff7f",  
         padding:15,
         borderRadius:50,
         position:'absolute',
         bottom:20,
         right:20,
+      },
+      addRemainderText:{
+        fontSize:22,
+        fontWeight:"800",
+        letterSpacing:1,
+        color:"#fff",
+        textAlign:'center',
+        paddingHorizontal:50,
       },
 
 });

@@ -8,10 +8,13 @@ import emptyScreenImage from "../../../assets/images/reminderScreenImage.png";
 const RemainderListScreen = () => {
   return (
     <SafeAreaView style={styles.mainContainer}>
+
+
       <View style={styles.imageContainer}>
         <Image source={emptyScreenImage} style={styles.emptyScreenImage} />
       </View>
-
+      <Text style={styles.addRemainderText}> Add remainder to never miss your scheduled medicine time</Text>
+        
       <TouchableOpacity
           style={styles.addButtonContainer}
           onPress={() => submitHandler()}
