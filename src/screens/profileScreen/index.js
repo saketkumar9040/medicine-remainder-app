@@ -17,6 +17,7 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 import SelectDropdown from "react-native-select-dropdown";
+import messaging from "@react-native-firebase/messaging";
 
 import styles from "./style";
 const genderList = ["Male", "Female", "Others"];
@@ -56,14 +57,15 @@ const ProfileScreen = () => {
         data.watsAppNumber = watsAppNumber;
       }
       const deviceId = DeviceInfo.getUniqueIdSync();
-      data.deviceId = deviceId
-   
+      data.deviceId = deviceId;
 
-      const saveUser = await postRequest("addUserDetails", data );
-      console.log(saveUser);
+      const FCMToken = await messaging().getToken();
+      data.deviceFCMToken = FCMToken;
 
-      return Alert.alert(saveUser.message);
-      
+      const saveUserDetails = await postRequest("addUserDetails", data);
+      console.log(saveUserDetails);
+
+      return Alert.alert(saveUserDetails.message);
     } catch (error) {
       console.log(error.message);
       Alert.alert("sorry😌", "unable to update user information");
