@@ -1,12 +1,15 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ListScreen from "../screens/listScreen";
-import AddMedicineScreen from "../screens/addMedicineScreen";
-import ProfileScreen from "../screens/profileScreen";
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import * as Updates from "expo-updates";
 import { useEffect } from "react";
+import DeviceInfo from 'react-native-device-info';
+import 'expo-dev-client';
+
+import ListScreen from "../screens/listScreen";
+import AddMedicineScreen from "../screens/addMedicineScreen";
+import ProfileScreen from "../screens/profileScreen";
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -79,8 +82,10 @@ const TabsNavigator = () => {
 };
 
 const MainNavigator = () => {
-  //  IMPLEMENTING EXPO - UPDATES   ===================================================>
 
+  const deviceId = DeviceInfo.getUniqueIdSync();
+  console.log(deviceId)
+  //  IMPLEMENTING EXPO - UPDATES   ===================================================>
   useEffect(() => {
     onFetchUpdateAsync();
   }, []);
@@ -99,8 +104,16 @@ const MainNavigator = () => {
         "You cannot check for updates in development mode. To test manual updates, publish your project using `expo publish` and open the published version in this development client."
       ) {
         console.log(error.message);
-      } else {
-        alert(`Error fetching latest Expo update: ${error}`);
+      } 
+      if (
+        error.message ===
+        "You cannot check for updates in development mode. To test manual updates, make a release build with `npm run ios --configuration Release` or `npm run android --variant Release`."
+      ) {
+        console.log(error.message); 
+      } 
+      else {
+        // console.log(error.message)
+        alert(`Error fetching latest Expo update: ${error.message}`);
       }
     }
   }

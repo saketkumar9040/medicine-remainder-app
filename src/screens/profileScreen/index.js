@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
-import { FontAwesome5, EvilIcons, Entypo, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome5, EvilIcons, Entypo, MaterialIcons, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 
 import styles from "./style";
 import SelectDropdown from "react-native-select-dropdown";
@@ -76,7 +76,7 @@ const ProfileScreen = () => {
 
         <View style={{...styles.inputContainer}}>
         {/* <Image source={emailImage} style={styles.image}/> */}
-        <MaterialCommunityIcons name="email" size={34} color="#fff" />
+        <MaterialCommunityIcons name="email-outline" size={34} color="#fff" />
           <TextInput
             style={styles.textInput}
             placeholder="Enter e-mail address"
@@ -91,7 +91,7 @@ const ProfileScreen = () => {
 
         <View style={{...styles.inputContainer}}>
            {/* <Image source={phoneImage} style={styles.image}/> */}
-           <FontAwesome5 name="phone-alt" size={34} color="#fff" />
+           <Ionicons name="call-outline" size={34} color="#fff" />
           <TextInput
             style={styles.textInput}
             placeholder="Enter phone number"
