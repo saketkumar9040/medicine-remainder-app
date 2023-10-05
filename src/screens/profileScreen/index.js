@@ -15,8 +15,9 @@ import SelectDropdown from "react-native-select-dropdown";
 const genderList = [
   "Male","Female","Others"
 ];
-import phoneImage from "../../../assets/images/phoneImage.png"
-import emailImage from "../../../assets/images/emailImage.png"
+
+// import phoneImage from "../../../assets/images/phoneImage.png"
+// import emailImage from "../../../assets/images/emailImage.png"
 import watsAppImage from "../../../assets/images/watsAppImage.png";
 
 const ProfileScreen = () => {
@@ -25,7 +26,12 @@ const ProfileScreen = () => {
   const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [watsUpNumber, setWatsUpNumber] = useState("");
+  const [watsAppNumber, setWatsAppNumber] = useState("");
+  console.log(userName)
+  console.log(gender)
+  console.log(email)
+  console.log(phone)
+  console.log(watsAppNumber)
 
   const [ isUpdated,setIsUpdated] = useState(false);
 
@@ -111,9 +117,9 @@ const ProfileScreen = () => {
             placeholder="Enter watsApp number"
             keyboardType="numeric"
             placeholderTextColor="#00ff7f"
-            value={phone}
+            value={watsAppNumber}
             onChangeText={(e) => {
-               setPhone(e);
+               setWatsAppNumber(e);
             }}
           />
         </View>
@@ -122,7 +128,7 @@ const ProfileScreen = () => {
         style={styles.submitContainer}
         onPress={() => submitHandler()}
       >
-        <Text style={styles.submitText}>save</Text>
+        <Text style={styles.submitText}>SAVE</Text>
         <Entypo name="save" size={24} color="#fff" />
       </TouchableOpacity>
 

@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderBottomColor: "#fff",
     borderBottomWidth: 0.5,
-    
   },
   textInputNumber: {
     backgroundColor: "#fff",
@@ -70,6 +69,7 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     letterSpacing: 1,
     color: "#fff",
+    letterSpacing:5,
   },
 });
 
