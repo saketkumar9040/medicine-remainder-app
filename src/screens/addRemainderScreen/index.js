@@ -25,7 +25,7 @@ const dosesFrequencyList = [
   "Monthly",
 ];
 
-const AddMedicineScreen = ({ navigation }) => {
+const AddRemainderScreen = ({ navigation }) => {
   const [medicineName, SetMedicineName] = useState("");
   const [frequency, setFrequency] = useState("");
   const [pillsCount, setPillsCount] = useState("");
@@ -224,4 +224,4 @@ const AddMedicineScreen = ({ navigation }) => {
   );
 };
 
-export default AddMedicineScreen;
+export default AddRemainderScreen;

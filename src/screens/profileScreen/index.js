@@ -7,7 +7,7 @@ import {
   Alert,
   Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FontAwesome5,
   EvilIcons,
@@ -31,6 +31,37 @@ const ProfileScreen = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [watsAppNumber, setWatsAppNumber] = useState("");
+  const [profilePicUrl, setProfilePicUrl] = useState("");
+
+  useEffect(()=>{
+     getUserDetails()
+  },[]);
+
+  const getUserDetails = async () => {
+    try {
+      const userData = await postRequest("getUserDetails",{deviceId:DeviceInfo.getUniqueIdSync()});
+      if(userData.data.email){
+        setEmail(userData.data.email)
+      }     
+      if(userData.data.gender){
+        setGender(userData.data.gender)
+      }     
+      if(userData.data.name){
+        setUserName(userData.data.name)
+      }     
+      if(userData.data.phone){
+        setPhone(userData.data.Phone)
+      }     
+      if(userData.data.watsAppNumber){
+        setWatsAppNumber(userData.data.watsAppNumber)
+      }     
+      if(profilePicUrl){
+        setProfilePicUrl(userData.data.profilePicUrl)
+      }
+    } catch (error) {
+        console.log(error);
+    }
+  }
 
   const submitHandler = async () => {
     try {
@@ -56,15 +87,15 @@ const ProfileScreen = () => {
       if (watsAppNumber) {
         data.watsAppNumber = watsAppNumber;
       }
+      if(profilePicUrl) {
+        data.profilePicUrl = profilePicUrl
+      }
+
       const deviceId = DeviceInfo.getUniqueIdSync();
       data.deviceId = deviceId;
 
-      const FCMToken = await messaging().getToken();
-      data.deviceFCMToken = FCMToken;
-
       const saveUserDetails = await postRequest("addUserDetails", data);
-      console.log(saveUserDetails);
-
+      console.log(saveUserDetails.data);
       return Alert.alert(saveUserDetails.message);
     } catch (error) {
       console.log(error.message);
