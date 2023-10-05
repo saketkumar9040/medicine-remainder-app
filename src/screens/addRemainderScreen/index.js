@@ -12,7 +12,6 @@ import {
 import SelectDropdown from "react-native-select-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Entypo, Ionicons } from "@expo/vector-icons";
-import axios from "axios";
 
 import medicineImage from "../../../assets/images/medicineImage.png";
 import styles from "./style";

@@ -1,14 +1,23 @@
 import { View, Text, SafeAreaView, Image ,TouchableOpacity} from "react-native";
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { Entypo,} from "@expo/vector-icons";
 
 import styles from "./style";
 import emptyScreenImage from "../../../assets/images/reminderScreenImage.png";
 
 const RemainderListScreen = ({navigation}) => {
+
+  const [reminderList,setReminderList] = useState("");
+
+  useEffect(()=>{
+    //  FETCH REMINDER LIST FROM DATABSE ==================================================>
+  },[])
+
   return (
     <SafeAreaView style={styles.mainContainer}>
-
+    {
+      // SHOW FLATLIST IF REMINDER LIST IS AVAILABLE IN DATABSE ===================================>
+    }
 
       <View style={styles.imageContainer}>
         <Image source={emptyScreenImage} style={styles.emptyScreenImage} />
