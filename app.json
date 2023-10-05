@@ -23,6 +23,7 @@
         "backgroundColor": "#000000"
       },
       "package": "com.saketkumar.medatime",
+      "googleServicesFile": "./google-services.json",
       "versionCode": 1
     },
     "androidNavigationBar": {
@@ -36,10 +37,19 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      "@react-native-firebase/app"
+    ],
     "extra": {
       "eas": {
         "projectId": "23b83f29-392c-40b5-a048-399a24df442e"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/23b83f29-392c-40b5-a048-399a24df442e"
     }
   }
 }

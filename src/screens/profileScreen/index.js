@@ -8,36 +8,70 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
-import { FontAwesome5, EvilIcons, Entypo, MaterialIcons, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
+import {
+  FontAwesome5,
+  EvilIcons,
+  Entypo,
+  MaterialIcons,
+  MaterialCommunityIcons,
+  Ionicons,
+} from "@expo/vector-icons";
+import SelectDropdown from "react-native-select-dropdown";
 
 import styles from "./style";
-import SelectDropdown from "react-native-select-dropdown";
-const genderList = [
-  "Male","Female","Others"
-];
-
-// import phoneImage from "../../../assets/images/phoneImage.png"
-// import emailImage from "../../../assets/images/emailImage.png"
+const genderList = ["Male", "Female", "Others"];
 import watsAppImage from "../../../assets/images/watsAppImage.png";
+import { postRequest } from "../../utils/apiCallsHandler";
+import DeviceInfo from "react-native-device-info";
 
 const ProfileScreen = () => {
-
   const [userName, setUserName] = useState("");
   const [gender, setGender] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [watsAppNumber, setWatsAppNumber] = useState("");
-  console.log(userName)
-  console.log(gender)
-  console.log(email)
-  console.log(phone)
-  console.log(watsAppNumber)
 
-  const [ isUpdated,setIsUpdated] = useState(false);
+  const submitHandler = async () => {
+    try {
+      if (phone && phone.length < 10) {
+        return Alert.alert("Phone number should be 10 digits");
+      }
+      if (watsAppNumber && watsAppNumber.length < 10) {
+        return Alert.alert("Phone number should be 10 digits");
+      }
+      let data = {};
+      if (userName) {
+        data.userName = userName;
+      }
+      if (gender) {
+        data.gender = gender;
+      }
+      if (email) {
+        data.email = email;
+      }
+      if (phone) {
+        data.phone = phone;
+      }
+      if (watsAppNumber) {
+        data.watsAppNumber = watsAppNumber;
+      }
+      const deviceId = DeviceInfo.getUniqueIdSync();
+      data.deviceId = deviceId
+   
+
+      const saveUser = await postRequest("addUserDetails", data );
+      console.log(saveUser);
+
+      return Alert.alert(saveUser.message);
+      
+    } catch (error) {
+      console.log(error.message);
+      Alert.alert("sorry😌", "unable to update user information");
+    }
+  };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-
       <View style={styles.imageContainer}>
         <EvilIcons name="user" size={150} color="#00ff7f" />
       </View>
@@ -54,75 +88,75 @@ const ProfileScreen = () => {
         />
       </View>
 
-      <View style={{...styles.inputContainer}}>
-          <Text style={{...styles.inputHeadingText,flex:1,}}>
-            Gender
-          </Text>
-          <SelectDropdown
-            data={genderList}
-            // defaultValueByIndex={0}
-            defaultButtonText="select"
-            onSelect={(selectedItem, index) => {
-              setGender(selectedItem);
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem;
-            }}
-            buttonStyle={{
-              width:100,
-              marginTop: 20,
-              height: 30,
-              borderRadius: 5,
-            }}
-            buttonTextStyle={{
-              fontWeight: "900", 
-            }}
-          />
-        </View>
+      <View style={{ ...styles.inputContainer }}>
+        <Text style={{ ...styles.inputHeadingText, flex: 1 }}>Gender</Text>
+        <SelectDropdown
+          data={genderList}
+          // defaultValueByIndex={0}
+          defaultButtonText="select"
+          onSelect={(selectedItem, index) => {
+            setGender(selectedItem);
+          }}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            return selectedItem;
+          }}
+          buttonStyle={{
+            width: 100,
+            marginTop: 20,
+            height: 30,
+            borderRadius: 5,
+          }}
+          buttonTextStyle={{
+            fontWeight: "900",
+          }}
+        />
+      </View>
 
-        <View style={{...styles.inputContainer}}>
-        {/* <Image source={emailImage} style={styles.image}/> */}
+      <View style={{ ...styles.inputContainer }}>
         <MaterialCommunityIcons name="email-outline" size={34} color="#fff" />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Enter e-mail address"
-            keyboardType="email-address"
-            placeholderTextColor="#00ff7f"
-            value={email}
-            onChangeText={(e) => {
-               setEmail(e);
-            }}
-          />
-        </View>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter e-mail address"
+          keyboardType="email-address"
+          placeholderTextColor="#00ff7f"
+          value={email}
+          onChangeText={(e) => {
+            setEmail(e);
+          }}
+        />
+      </View>
 
-        <View style={{...styles.inputContainer}}>
-           {/* <Image source={phoneImage} style={styles.image}/> */}
-           <Ionicons name="call-outline" size={34} color="#fff" />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Enter phone number"
-            keyboardType="numeric"
-            placeholderTextColor="#00ff7f"
-            value={phone}
-            onChangeText={(e) => {
-               setPhone(e);
-            }}
-          />
-        </View>
+      <View style={{ ...styles.inputContainer }}>
+        <Ionicons name="call-outline" size={34} color="#fff" />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter phone number"
+          keyboardType="numeric"
+          placeholderTextColor="#00ff7f"
+          value={phone}
+          onChangeText={(e) => {
+            e.length > 11
+              ? Alert.alert("Phone number should be 10 digits")
+              : setPhone(e);
+          }}
+        />
+      </View>
 
-        <View style={{...styles.inputContainer}}>
-        <Image source={watsAppImage} style={styles.image}/>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Enter watsApp number"
-            keyboardType="numeric"
-            placeholderTextColor="#00ff7f"
-            value={watsAppNumber}
-            onChangeText={(e) => {
-               setWatsAppNumber(e);
-            }}
-          />
-        </View>
+      <View style={{ ...styles.inputContainer }}>
+        <Image source={watsAppImage} style={styles.image} />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter watsApp number"
+          keyboardType="numeric"
+          placeholderTextColor="#00ff7f"
+          value={watsAppNumber}
+          onChangeText={(e) => {
+            e.length > 11
+              ? Alert.alert("WatsApp number should be 10 digits")
+              : setWatsAppNumber(e);
+          }}
+        />
+      </View>
 
       <TouchableOpacity
         style={styles.submitContainer}
@@ -131,7 +165,6 @@ const ProfileScreen = () => {
         <Text style={styles.submitText}>SAVE</Text>
         <Entypo name="save" size={24} color="#fff" />
       </TouchableOpacity>
-
     </SafeAreaView>
   );
 };

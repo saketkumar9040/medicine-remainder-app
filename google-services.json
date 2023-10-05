@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "400710342497",
+    "project_id": "medicine-remainder-app-bc9e9",
+    "storage_bucket": "medicine-remainder-app-bc9e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400710342497:android:8b5627f86749849f959720",
+        "android_client_info": {
+          "package_name": "com.saketkumar.medatime"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2u5h2N0ey43yPJBpILsOSWZyZue7gHDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
