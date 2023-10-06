@@ -30,43 +30,12 @@ const ProfileScreen = () => {
 
   const storedUserData = useSelector(state=>state.auth.userData);
 
-  const [userName, setUserName] = useState("");
-  const [gender, setGender] = useState("select");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [watsAppNumber, setWatsAppNumber] = useState("");
-  const [profilePicUrl, setProfilePicUrl] = useState("");
-
-  useEffect(()=>{
-     getUserDetails()
-  },[]);
-
-  const getUserDetails = async () => {
-    try {
-      const userData = await postRequest("getUserDetails",{deviceId:DeviceInfo.getUniqueIdSync()});
-      console.log(userData.data)
-      if(userData.data.email){
-        setEmail(userData.data.email)
-      }     
-      if(userData.data.gender){
-        setGender(userData.data.gender)
-      }     
-      if(userData.data.userName){
-        setUserName(userData.data.userName)
-      }     
-      if(userData.data.phone){
-        setPhone(userData.data.phone)
-      }     
-      if(userData.data.watsAppNumber){
-        setWatsAppNumber(userData.data.watsAppNumber)
-      }     
-      if(profilePicUrl){
-        setProfilePicUrl(userData.data.profilePicUrl)
-      }
-    } catch (error) {
-        console.log(error);
-    }
-  }
+  const [userName, setUserName] = useState(storedUserData?.userName);
+  const [gender, setGender] = useState(storedUserData?.gender ??"select");
+  const [email, setEmail] = useState(storedUserData?.email);
+  const [phone, setPhone] = useState(storedUserData?.phone);
+  const [watsAppNumber, setWatsAppNumber] = useState(storedUserData?.watsAppNumber);
+  const [profilePicUrl, setProfilePicUrl] = useState(storedUserData?.profilePicUrl);
 
   const submitHandler = async () => {
     try {
@@ -96,8 +65,8 @@ const ProfileScreen = () => {
         data.profilePicUrl = profilePicUrl
       }
 
-      const deviceId = DeviceInfo.getUniqueIdSync();
-      data.deviceId = deviceId;
+      const userId = storedUserData._id
+      data.userId = userId;
 
       const saveUserDetails = await postRequest("addUserDetails", data);
       console.log(saveUserDetails.data);
@@ -119,7 +88,7 @@ const ProfileScreen = () => {
           placeholder="Nickname"
           placeholderTextColor="#fff"
           autoCapitalize="none"
-          value={storedUserData?.userName}
+          value={userName}
           onChangeText={(e) => {
             setUserName(e);
           }}
@@ -130,7 +99,7 @@ const ProfileScreen = () => {
         <Text style={{ ...styles.inputHeadingText, flex: 1 }}>Gender</Text>
         <SelectDropdown
           data={genderList}
-          defaultValue={storedUserData?.gender}
+          defaultValue={gender}
           defaultButtonText="select"
           onSelect={(selectedItem, index) => {
             setGender(selectedItem);
@@ -157,7 +126,7 @@ const ProfileScreen = () => {
           placeholder="Enter e-mail address"
           keyboardType="email-address"
           placeholderTextColor="#00ff7f"
-          value={storedUserData?.email}
+          value={email}
           onChangeText={(e) => {
             setEmail(e);
           }}
@@ -171,7 +140,7 @@ const ProfileScreen = () => {
           placeholder="Enter phone number"
           keyboardType="numeric"
           placeholderTextColor="#00ff7f"
-          value={storedUserData?.phone?.toString()}
+          value={phone?.toString()}
           onChangeText={(e) => {
             e.length > 11
               ? Alert.alert("Phone number should be 10 digits")
@@ -187,7 +156,7 @@ const ProfileScreen = () => {
           placeholder="Enter watsApp number"
           keyboardType="numeric"
           placeholderTextColor="#00ff7f"
-          value={storedUserData?.watsAppNumber?.toString()}
+          value={watsAppNumber?.toString()}
           onChangeText={(e) => {
             e.length > 11
               ? Alert.alert("WatsApp number should be 10 digits")
