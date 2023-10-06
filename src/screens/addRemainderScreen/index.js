@@ -129,7 +129,6 @@ const AddRemainderScreen = ({ navigation }) => {
           </Text>
           <SelectDropdown
             data={dosesFrequencyList}
-            defaultValueByIndex={0}
             onSelect={(selectedItem, index) => {
               setFrequency(selectedItem);
             }}

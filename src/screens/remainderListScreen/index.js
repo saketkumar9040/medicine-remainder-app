@@ -14,7 +14,10 @@ import emptyScreenImage from "../../../assets/images/reminderScreenImage.png";
 import headerImage from "../../../assets/images/reminderScreenHeaderLogo.png";
 import { useSelector } from "react-redux";
 import { postRequest } from "../../utils/apiCallsHandler";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons/build/Icons";
+import {
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons/build/Icons";
 
 const RemainderListScreen = ({ navigation }) => {
   const storedUserData = useSelector((state) => state.auth.userData);
@@ -62,7 +65,7 @@ const RemainderListScreen = ({ navigation }) => {
                     >
                       <MaterialCommunityIcons
                         name="pill"
-                        size={29}
+                        size={35}
                         color="#00FFFF"
                       />
                       <Text style={styles.medicineName}>
@@ -71,10 +74,16 @@ const RemainderListScreen = ({ navigation }) => {
                       <FontAwesome5 name="edit" size={24} color="#00ff7f" />
                     </View>
                     <Text style={styles.timing}>
-                      Timing :-{"  "} {new Date(item.time).getHours()} :{" "}
-                      {new Date(item.time).getMinutes() < 10 ? `0${new Date(item.time).getMinutes()}`:
-                      new Date(item.time).getMinutes()
-                      }
+                      Timing :-{"  "}{" "}
+                      {new Date(item.time).getHours() % 12 > 0
+                        ? new Date(item.time).getHours() % 12
+                        : 12}{" "}
+                      :{" "}
+                      {new Date(item.time).getMinutes() < 10
+                        ? `0${new Date(item.time).getMinutes()}`
+                        : new Date(item.time).getMinutes()}
+                      {" "}
+                      {new Date(item.time).getHours() >= 12 ? "PM" : "AM"}
                     </Text>
                     <Text style={styles.frequency}>
                       Servings :-{"  "} {item.frequency}
