@@ -182,8 +182,8 @@ const ProfileScreen = () => {
         <View style={{flexDirection:"row",gap:10,alignItems:"center",justifyContent:"center"}}>
             <TouchableOpacity
             style={{...styles.submitContainer,backgroundColor:"red"}}
-            onPress={() => setDetailsUpdated(false)}
-            disabled={detailsUpdated}
+            onPress={() => {
+              setDetailsUpdated(false)}}
           >
             <Text style={styles.submitText}>CANCEL </Text>
             <MaterialIcons name="cancel" size={24} color="#fff" />
@@ -191,7 +191,6 @@ const ProfileScreen = () => {
           <TouchableOpacity
             style={styles.submitContainer}
             onPress={() => submitHandler()}
-            disabled={detailsUpdated}
           >
             <Text style={{...styles.submitText,marginRight:10,}}>SAVE</Text>
             <Entypo name="save" size={24} color="#fff" />
