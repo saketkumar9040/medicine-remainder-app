@@ -41,7 +41,6 @@ const ProfileScreen = () => {
   );
 
   const [detailsUpdated, setDetailsUpdated] = useState(false);
-  console.log(detailsUpdated);
 
   const submitHandler = async () => {
     try {

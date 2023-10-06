@@ -16,7 +16,8 @@ import { Entypo, Ionicons } from "@expo/vector-icons";
 import medicineImage from "../../../assets/images/medicineImage.png";
 import styles from "./style";
 import { postRequest } from "../../utils/apiCallsHandler";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { setReminderData } from "../../redux/reminderSlice";
 const dosesFrequencyList = [
   "Once Daily",
   "Twice Daily",
@@ -27,8 +28,10 @@ const dosesFrequencyList = [
 
 const AddRemainderScreen = ({ navigation }) => {
 
+  const dispatch = useDispatch();
+
   const storedUserData = useSelector(state=>state.auth.userData);
-  console.log(storedUserData)
+  // console.log(storedUserData)
 
   const [medicineName, SetMedicineName] = useState("");
   const [frequency, setFrequency] = useState("");
@@ -71,10 +74,10 @@ const AddRemainderScreen = ({ navigation }) => {
       if(pillsCount===""){
         return Alert.alert("Please select no of pills ");
       }
-      if(pillsStock===""){
+      if(pillsStock === ""){
         return Alert.alert("Please select pills in stock with you");
       }
-      const saveRemainder = await postRequest("addRemainder",{
+      const saveRemainder = await postRequest("addReminder",{
          medicineName,
          frequency,
          time:date,
@@ -91,7 +94,7 @@ const AddRemainderScreen = ({ navigation }) => {
         setPillsCount("");
         setPillsStock("");
         setCaretakerNumber("");
-        dispatch
+        dispatch(setReminderData({reminderData:saveRemainder.data}))
         navigation.navigate("Doses List");
       }
     } catch (error) {
