@@ -14,7 +14,7 @@ import emptyScreenImage from "../../../assets/images/reminderScreenImage.png";
 import headerImage from "../../../assets/images/reminderScreenHeaderLogo.png";
 import { useSelector } from "react-redux";
 import { postRequest } from "../../utils/apiCallsHandler";
-import { MaterialCommunityIcons } from "@expo/vector-icons/build/Icons";
+import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons/build/Icons";
 
 const RemainderListScreen = ({ navigation }) => {
   const storedUserData = useSelector((state) => state.auth.userData);
@@ -62,12 +62,13 @@ const RemainderListScreen = ({ navigation }) => {
                     >
                       <MaterialCommunityIcons
                         name="pill"
-                        size={24}
+                        size={29}
                         color="#fff"
                       />
                       <Text style={styles.medicineName}>
                         {item.medicineName}
                       </Text>
+                      <FontAwesome5 name="edit" size={24} color="#fff" />
                     </View>
                     <Text style={styles.timing}>
                       Timing :-{"  "} {new Date(item.time).getHours()} :{" "}

@@ -48,19 +48,20 @@ const styles = StyleSheet.create({
     resizeMode: "center",
   },
   medicineName:{
+    flex:1,
     fontSize:22,
     fontWeight:"800",
     color:"#fff",
   },
   timing:{
-    fontSize:22,
-    fontWeight:"300",
+    fontSize:18,
+    fontWeight:"400",
     color:"#fff",
     marginVertical:10,
   },
   frequency:{
-    fontSize:18,
-    fontWeight:"300",
+    fontSize:16,
+    fontWeight:"400",
     color:"#fff",
   }
 });
