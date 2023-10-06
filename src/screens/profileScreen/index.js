@@ -27,18 +27,21 @@ import DeviceInfo from "react-native-device-info";
 import { useSelector } from "react-redux";
 
 const ProfileScreen = () => {
-
-  const storedUserData = useSelector(state=>state.auth.userData);
+  const storedUserData = useSelector((state) => state.auth.userData);
 
   const [userName, setUserName] = useState(storedUserData?.userName);
-  const [gender, setGender] = useState(storedUserData?.gender ??"select");
+  const [gender, setGender] = useState(storedUserData?.gender ?? "select");
   const [email, setEmail] = useState(storedUserData?.email);
   const [phone, setPhone] = useState(storedUserData?.phone);
-  const [watsAppNumber, setWatsAppNumber] = useState(storedUserData?.watsAppNumber);
-  const [profilePicUrl, setProfilePicUrl] = useState(storedUserData?.profilePicUrl);
+  const [watsAppNumber, setWatsAppNumber] = useState(
+    storedUserData?.watsAppNumber
+  );
+  const [profilePicUrl, setProfilePicUrl] = useState(
+    storedUserData?.profilePicUrl
+  );
 
-  const [ detailsUpdated,setDetailsUpdated] = useState(false);
-  console.log(detailsUpdated)
+  const [detailsUpdated, setDetailsUpdated] = useState(false);
+  console.log(detailsUpdated);
 
   const submitHandler = async () => {
     try {
@@ -64,16 +67,16 @@ const ProfileScreen = () => {
       if (watsAppNumber) {
         data.watsAppNumber = watsAppNumber;
       }
-      if(profilePicUrl) {
-        data.profilePicUrl = profilePicUrl
+      if (profilePicUrl) {
+        data.profilePicUrl = profilePicUrl;
       }
 
-      const userId = storedUserData._id
+      const userId = storedUserData._id;
       data.userId = userId;
 
       const saveUserDetails = await postRequest("addUserDetails", data);
       console.log(saveUserDetails.data);
-      setDetailsUpdated(false)
+      setDetailsUpdated(false);
       return Alert.alert(saveUserDetails.message);
     } catch (error) {
       console.log(error.message);
@@ -83,6 +86,7 @@ const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
+      <View style={{flex:1,}}>
       <View style={styles.imageContainer}>
         <EvilIcons name="user" size={150} color="#00ff7f" />
       </View>
@@ -94,7 +98,7 @@ const ProfileScreen = () => {
           autoCapitalize="none"
           value={userName}
           onChangeText={(e) => {
-            setDetailsUpdated(true)
+            setDetailsUpdated(true);
             setUserName(e);
           }}
         />
@@ -107,7 +111,7 @@ const ProfileScreen = () => {
           defaultValue={gender}
           defaultButtonText="select"
           onSelect={(selectedItem, index) => {
-            setDetailsUpdated(true)
+            setDetailsUpdated(true);
             setGender(selectedItem);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
@@ -134,7 +138,7 @@ const ProfileScreen = () => {
           placeholderTextColor="#00ff7f"
           value={email}
           onChangeText={(e) => {
-            setDetailsUpdated(true)
+            setDetailsUpdated(true);
             setEmail(e);
           }}
         />
@@ -149,7 +153,7 @@ const ProfileScreen = () => {
           placeholderTextColor="#00ff7f"
           value={phone?.toString()}
           onChangeText={(e) => {
-            setDetailsUpdated(true)
+            setDetailsUpdated(true);
             e.length > 11
               ? Alert.alert("Phone number should be 10 digits")
               : setPhone(e);
@@ -166,25 +170,35 @@ const ProfileScreen = () => {
           placeholderTextColor="#00ff7f"
           value={watsAppNumber?.toString()}
           onChangeText={(e) => {
-            setDetailsUpdated(true)
+            setDetailsUpdated(true);
             e.length > 11
               ? Alert.alert("WatsApp number should be 10 digits")
               : setWatsAppNumber(e);
           }}
         />
       </View>
-      { 
-         detailsUpdated && (
-      <TouchableOpacity
-        style={styles.submitContainer}
-        onPress={() => submitHandler()}
-        disabled={detailsUpdated}
-      >
-        <Text style={styles.submitText}>SAVE</Text>
-        <Entypo name="save" size={24} color="#fff" />
-      </TouchableOpacity>
-         )
-      }
+      </View>
+      {detailsUpdated && (
+        <View style={{flexDirection:"row",gap:10,alignItems:"center",justifyContent:"center"}}>
+            <TouchableOpacity
+            style={{...styles.submitContainer,backgroundColor:"red"}}
+            onPress={() => setDetailsUpdated(false)}
+            disabled={detailsUpdated}
+          >
+            <Text style={styles.submitText}>CANCEL </Text>
+            <MaterialIcons name="cancel" size={24} color="#fff" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.submitContainer}
+            onPress={() => submitHandler()}
+            disabled={detailsUpdated}
+          >
+            <Text style={{...styles.submitText,marginRight:10,}}>SAVE</Text>
+            <Entypo name="save" size={24} color="#fff" />
+          </TouchableOpacity>
+        
+        </View>
+      )}
     </SafeAreaView>
   );
 };
