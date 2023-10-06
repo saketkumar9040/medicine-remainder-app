@@ -77,6 +77,9 @@ const AddRemainderScreen = ({ navigation }) => {
       if(pillsStock === ""){
         return Alert.alert("Please select pills in stock with you");
       }
+      if(frequency===""){
+        return Alert.alert("Please select the frequency of doses");
+      }
       const saveRemainder = await postRequest("addReminder",{
          medicineName,
          frequency,

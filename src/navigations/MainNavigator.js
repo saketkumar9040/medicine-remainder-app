@@ -10,13 +10,12 @@ import TabsNavigator from "./TabsNavigator.js";
 import { postRequest } from "../utils/apiCallsHandler";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../redux/authSlice.js";
+import { setReminderData } from "../redux/reminderSlice.js";
 
 const Stack = createNativeStackNavigator();
 
 const MainNavigator = () => {
   const dispatch = useDispatch();
-
-  const [FCMToken,setFCMToken] = useState("");
 
   //  FIREBASE CLOUD MESSAGING  ==========================================================>
 
@@ -113,7 +112,9 @@ const MainNavigator = () => {
   const createUser = async (deviceId, FCMToken) => {
     try {
       const create = await postRequest("createUser", { deviceId, FCMToken });
-       dispatch(setUserData({userData:create.data}))
+       dispatch(setUserData({userData:create.data}));
+       const reminderData = await postRequest("getReminderList",{userId:create.data._id});
+       dispatch(setReminderData({reminderData:reminderData.data}))
     } catch (error) {
       console.log(error.message);
     }

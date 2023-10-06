@@ -15,30 +15,23 @@ import headerImage from "../../../assets/images/reminderScreenHeaderLogo.png";
 import { useSelector } from "react-redux";
 import { postRequest } from "../../utils/apiCallsHandler";
 import {
+  AntDesign,
   FontAwesome5,
   MaterialCommunityIcons,
 } from "@expo/vector-icons/build/Icons";
 
 const RemainderListScreen = ({ navigation }) => {
   const storedUserData = useSelector((state) => state.auth.userData);
+  const reminderList = useSelector(state=>state.reminder.reminderData);
 
-  const [reminderList, setReminderList] = useState([]);
-  console.log(reminderList);
-
-  const getReminderList = async () => {
+  const deleteReminder = async (id) => {
     try {
-      const fetchList = await postRequest("getReminderList", {
-        userId: storedUserData?._id,
-      });
-      setReminderList(fetchList.data);
+      console.log(id)
     } catch (error) {
-      console.log(error.message);
+      console.log(error)
     }
-  };
-
-  useEffect(() => {
-    getReminderList();
-  }, []);
+  }
+  
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -50,9 +43,9 @@ const RemainderListScreen = ({ navigation }) => {
             <FlatList
               showsVerticalScrollIndicator={false}
               data={reminderList}
-              renderItem={({ item, index }) => {
+              renderItem={({item,index}) => {
                 return (
-                  <TouchableOpacity
+                  <View
                     key={index}
                     style={styles.medicineCardContainer}
                   >
@@ -88,7 +81,10 @@ const RemainderListScreen = ({ navigation }) => {
                     <Text style={styles.frequency}>
                       Servings :-{"  "} {item.frequency}
                     </Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>deleteReminder(item._id)}>
+                    <AntDesign name="delete" size={30} color="red" style={{position:"absolute",bottom:0,right:0,}}/>
+                    </TouchableOpacity>
+                  </View>
                 );
               }}
             />

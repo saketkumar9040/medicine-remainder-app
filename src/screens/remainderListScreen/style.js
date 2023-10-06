@@ -33,9 +33,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
   },
   medicineCardContainer: {
-    margin: 10,
-    marginTop:20,
-    padding:20,
+    margin:5,
+    marginTop:5,
+    padding:10,
+    paddingHorizontal:20,
     marginHorizontal:20,
     borderWidth: .7,
     borderColor: "#fff",
