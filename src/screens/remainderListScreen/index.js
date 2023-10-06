@@ -25,7 +25,7 @@ const RemainderListScreen = ({ navigation }) => {
   const getReminderList = async () => {
     try {
       const fetchList = await postRequest("getReminderList", {
-        userId: storedUserData._id,
+        userId: storedUserData?._id,
       });
       setReminderList(fetchList.data);
     } catch (error) {
