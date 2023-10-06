@@ -4,10 +4,12 @@ import { Entypo,} from "@expo/vector-icons";
 
 import styles from "./style";
 import emptyScreenImage from "../../../assets/images/reminderScreenImage.png";
+import { useSelector } from "react-redux";
 
 const RemainderListScreen = ({navigation}) => {
 
-  const [reminderList,setReminderList] = useState("");
+   const reminderList = useSelector(state =>state.reminder.reminderData);
+   console.log(reminderList);
 
   useEffect(()=>{
     //  FETCH REMINDER LIST FROM DATABSE ==================================================>

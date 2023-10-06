@@ -16,6 +16,7 @@ import { Entypo, Ionicons } from "@expo/vector-icons";
 import medicineImage from "../../../assets/images/medicineImage.png";
 import styles from "./style";
 import { postRequest } from "../../utils/apiCallsHandler";
+import { useSelector } from "react-redux";
 const dosesFrequencyList = [
   "Once Daily",
   "Twice Daily",
@@ -25,6 +26,10 @@ const dosesFrequencyList = [
 ];
 
 const AddRemainderScreen = ({ navigation }) => {
+
+  const storedUserData = useSelector(state=>state.auth.userData);
+  console.log(storedUserData)
+
   const [medicineName, SetMedicineName] = useState("");
   const [frequency, setFrequency] = useState("");
   const [pillsCount, setPillsCount] = useState("");
@@ -75,7 +80,8 @@ const AddRemainderScreen = ({ navigation }) => {
          time:date,
          pillsCount,
          pillsStock,
-         caretakerNumber
+         caretakerNumber,
+         userId:storedUserData._id
       });
       Alert.alert(`${saveRemainder.message}`);
       if(saveRemainder.success == true){
@@ -84,7 +90,8 @@ const AddRemainderScreen = ({ navigation }) => {
         setFrequency(dosesFrequencyList[0])
         setPillsCount("");
         setPillsStock("");
-        setCaretakerNumber("")
+        setCaretakerNumber("");
+        dispatch
         navigation.navigate("Doses List");
       }
     } catch (error) {

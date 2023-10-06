@@ -3,11 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const reminderSlice = createSlice({
     name:"remainder",
     initialState:{
-        reminderData:null
+        reminderData:[]
     },
     reducers :{
         setReminderData :(state,action) => {
-            state.reminderData=action.payload.reminderData;
+            const newReminder = action.payload.reminderData;
+            state.reminderData.push(newReminder)
         }
     }
 });
