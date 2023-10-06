@@ -37,6 +37,9 @@ const ProfileScreen = () => {
   const [watsAppNumber, setWatsAppNumber] = useState(storedUserData?.watsAppNumber);
   const [profilePicUrl, setProfilePicUrl] = useState(storedUserData?.profilePicUrl);
 
+  const [ detailsUpdated,setDetailsUpdated] = useState(false);
+  console.log(detailsUpdated)
+
   const submitHandler = async () => {
     try {
       if (phone && phone.length < 10) {
@@ -70,6 +73,7 @@ const ProfileScreen = () => {
 
       const saveUserDetails = await postRequest("addUserDetails", data);
       console.log(saveUserDetails.data);
+      setDetailsUpdated(false)
       return Alert.alert(saveUserDetails.message);
     } catch (error) {
       console.log(error.message);
@@ -90,6 +94,7 @@ const ProfileScreen = () => {
           autoCapitalize="none"
           value={userName}
           onChangeText={(e) => {
+            setDetailsUpdated(true)
             setUserName(e);
           }}
         />
@@ -102,6 +107,7 @@ const ProfileScreen = () => {
           defaultValue={gender}
           defaultButtonText="select"
           onSelect={(selectedItem, index) => {
+            setDetailsUpdated(true)
             setGender(selectedItem);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
@@ -128,6 +134,7 @@ const ProfileScreen = () => {
           placeholderTextColor="#00ff7f"
           value={email}
           onChangeText={(e) => {
+            setDetailsUpdated(true)
             setEmail(e);
           }}
         />
@@ -142,6 +149,7 @@ const ProfileScreen = () => {
           placeholderTextColor="#00ff7f"
           value={phone?.toString()}
           onChangeText={(e) => {
+            setDetailsUpdated(true)
             e.length > 11
               ? Alert.alert("Phone number should be 10 digits")
               : setPhone(e);
@@ -158,20 +166,25 @@ const ProfileScreen = () => {
           placeholderTextColor="#00ff7f"
           value={watsAppNumber?.toString()}
           onChangeText={(e) => {
+            setDetailsUpdated(true)
             e.length > 11
               ? Alert.alert("WatsApp number should be 10 digits")
               : setWatsAppNumber(e);
           }}
         />
       </View>
-
+      { 
+         detailsUpdated && (
       <TouchableOpacity
         style={styles.submitContainer}
         onPress={() => submitHandler()}
+        disabled={detailsUpdated}
       >
         <Text style={styles.submitText}>SAVE</Text>
         <Entypo name="save" size={24} color="#fff" />
       </TouchableOpacity>
+         )
+      }
     </SafeAreaView>
   );
 };
