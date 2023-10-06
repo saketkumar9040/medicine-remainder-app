@@ -6,15 +6,17 @@ import { Alert } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import "expo-dev-client";
 import messaging from "@react-native-firebase/messaging";
-import TabsNavigator from "./TabsNavigator.js"
+import TabsNavigator from "./TabsNavigator.js";
 import { postRequest } from "../utils/apiCallsHandler";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/authSlice.js";
 
 const Stack = createNativeStackNavigator();
 
-
 const MainNavigator = () => {
-  const [deviceId, setDeviceId] = useState();
-  const [FCMToken, setFCMToken] = useState("");
+  const dispatch = useDispatch();
+
+  const [FCMToken,setFCMToken] = useState("");
 
   //  FIREBASE CLOUD MESSAGING  ==========================================================>
 
@@ -34,15 +36,14 @@ const MainNavigator = () => {
 
     if (requestUserPermission()) {
       // RETURN FCM TOKEN FOR THE DEVICE ==================================================>
-      const FCMToken = messaging()
-        .getToken()
-        .then(async (token) => {
-          setFCMToken(token);
-          await createUser(DeviceInfo.getUniqueIdSync(), token);
-        });
+      const getFCMToken = async() => {
+        const token =await  messaging().getToken();
+        await createUser(DeviceInfo.getUniqueIdSync(),token);
+      };
+      getFCMToken()
     } else {
       console.log("Failed token status", authStatus);
-    }
+    };
 
     // CHECK WHETHER INITIAL NOTIFICATION IS AVAILABLE =======================================>
 
@@ -76,7 +77,6 @@ const MainNavigator = () => {
     });
     return unsubscribe;
 
-    createUser();
   }, []);
 
   //  IMPLEMENTING EXPO - UPDATES   ==============================================================>
@@ -113,7 +113,7 @@ const MainNavigator = () => {
   const createUser = async (deviceId, FCMToken) => {
     try {
       const create = await postRequest("createUser", { deviceId, FCMToken });
-      console.log(create.message);
+       dispatch(setUserData({userData:create.data}))
     } catch (error) {
       console.log(error.message);
     }

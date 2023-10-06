@@ -13,6 +13,7 @@ export const postRequest = async (endPoint, data) => {
         },
       }
     );
+    // console.log(saveData.data)
     return saveData.data;
   } catch (error) {
     throw new Error(error.message);
