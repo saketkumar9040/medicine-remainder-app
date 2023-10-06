@@ -12,6 +12,7 @@ const RemainderListScreen = ({navigation}) => {
    const storedUserData = useSelector(state =>state.auth.userData);
 
   const [reminderList,setReminderList] =useState([]);
+  console.log(reminderList)
 
   const getReminderList = async () => {
     try {
@@ -23,8 +24,7 @@ const RemainderListScreen = ({navigation}) => {
   }
 
   useEffect(()=>{
-    //  FETCH REMINDER LIST FROM DATABSE ==================================================>
-    
+      getReminderList();
   },[])
 
   return (
