@@ -5,14 +5,26 @@ import { Entypo,} from "@expo/vector-icons";
 import styles from "./style";
 import emptyScreenImage from "../../../assets/images/reminderScreenImage.png";
 import { useSelector } from "react-redux";
+import { postRequest } from "../../utils/apiCallsHandler";
 
 const RemainderListScreen = ({navigation}) => {
 
-   const reminderList = useSelector(state =>state.reminder.reminderData);
-   console.log(reminderList);
+   const storedUserData = useSelector(state =>state.auth.userData);
+
+  const [reminderList,setReminderList] =useState([]);
+
+  const getReminderList = async () => {
+    try {
+      const fetchList = await postRequest("getReminderList",{userId:storedUserData._id});
+      console.log(fetchList.data)
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   useEffect(()=>{
     //  FETCH REMINDER LIST FROM DATABSE ==================================================>
+    
   },[])
 
   return (
