@@ -63,12 +63,12 @@ const RemainderListScreen = ({ navigation }) => {
                       <MaterialCommunityIcons
                         name="pill"
                         size={29}
-                        color="#fff"
+                        color="#00FFFF"
                       />
                       <Text style={styles.medicineName}>
                         {item.medicineName}
                       </Text>
-                      <FontAwesome5 name="edit" size={24} color="#fff" />
+                      <FontAwesome5 name="edit" size={24} color="#00ff7f" />
                     </View>
                     <Text style={styles.timing}>
                       Timing :-{"  "} {new Date(item.time).getHours()} :{" "}
