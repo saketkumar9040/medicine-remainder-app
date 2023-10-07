@@ -8,6 +8,7 @@ import {
   Alert,
   Button,
   TextInput,
+  ScrollView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Entypo, Feather, Ionicons } from "@expo/vector-icons";
@@ -51,7 +52,6 @@ const RemainderListScreen = ({ navigation }) => {
   });
   // console.log(medicineDetails?.time?.getHours());
 
-  const [date, setDate] = useState(new Date(3598050630000));
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   // console.log(date);
@@ -94,6 +94,8 @@ const RemainderListScreen = ({ navigation }) => {
 
   const editReminderHandler = async () => {
     try {
+      const editData = await postRequest("editReminder",medicineDetails);
+      Alert.alert(editData.message);
     } catch (error) {
       console.log(error.message);
     }
@@ -106,6 +108,7 @@ const RemainderListScreen = ({ navigation }) => {
         reminderList.length > 0 ? (
           <>
             <Modal isVisible={isModalVisible}>
+              <ScrollView>
               <View style={{ flex: 1, backgroundColor: "#000" }}>
                 <TouchableOpacity
                   style={{
@@ -325,6 +328,7 @@ const RemainderListScreen = ({ navigation }) => {
                   }}
                 />
               </View>
+              </ScrollView>
               <Button title="SAVE" onPress={editReminderHandler} color="#00ff7f" />
             </Modal>
 
