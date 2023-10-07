@@ -112,15 +112,15 @@ const RemainderListScreen = ({ navigation }) => {
               Add remainder to never miss your scheduled medicine time
             </Text>
 
+          </>
+        )
+      }
             <TouchableOpacity
               style={styles.addButtonContainer}
               onPress={() => navigation.navigate("Add Remainder")}
             >
               <Entypo name="add-to-list" size={34} color="#fff" />
             </TouchableOpacity>
-          </>
-        )
-      }
     </SafeAreaView>
   );
 };

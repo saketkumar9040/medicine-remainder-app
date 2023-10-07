@@ -97,7 +97,7 @@ const AddRemainderScreen = ({ navigation }) => {
         setPillsCount("");
         setPillsStock("");
         setCaretakerNumber("");
-        dispatch(setReminderData({reminderData:saveRemainder.data}))
+        dispatch(addReminderData({reminderData:saveRemainder.data}))
         navigation.navigate("Doses List");
       }
     } catch (error) {
