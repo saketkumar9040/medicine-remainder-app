@@ -48,7 +48,13 @@ const RemainderListScreen = ({ navigation }) => {
     }
   };
 
-  const editReminderHandler = async () => {};
+  const editReminderHandler = async () => {
+    try {
+       
+    } catch (error) {
+        console.log(error.message)
+    }
+  };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -57,8 +63,15 @@ const RemainderListScreen = ({ navigation }) => {
         reminderList.length > 0 ? (
           <>
             <Modal isVisible={isModalVisible}>
-              <View style={{ flex: 1,backgroundColor:"#000" }}>
+              <View style={{ flex: 1,backgroundColor:"#000",opacity:0.5}}>
                 <Text>Hello!</Text>
+                /* medicine  name edit */
+                <TextInput/>
+                /* frequency edit */
+                <TextInput/>
+                /* time edit */
+                <TextInput/>
+                /* caretaker number edit */
                 <TextInput/>
               </View>
                 <Button title="SAVE" onPress={toggleModal} color="#00ff7f" />
@@ -95,7 +108,6 @@ const RemainderListScreen = ({ navigation }) => {
                       <TouchableOpacity
                         onPress={() => {
                           toggleModal();
-                          editReminderHandler();
                         }}
                       >
                         <FontAwesome5 name="edit" size={24} color="#00ff7f" />
