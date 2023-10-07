@@ -43,6 +43,7 @@ const RemainderListScreen = ({ navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
 
   const [medicineDetails, setMedicineDetails] = useState({
+    id:"",
     medicineName: "",
     frequency: "select an option",
     time:"",
@@ -95,7 +96,19 @@ const RemainderListScreen = ({ navigation }) => {
   const editReminderHandler = async () => {
     try {
       const editData = await postRequest("editReminder",medicineDetails);
+      const reminderData = await postRequest("getReminderList",{userId:storedUserData._id});
+      dispatch(setReminderData({ reminderData: reminderData.data }));
       Alert.alert(editData.message);
+      toggleModal();
+      setMedicineDetails({
+        id:"",
+        medicineName: "",
+        frequency: "select an option",
+        time:"",
+        pillsCount: "",
+        pillsStock: "",
+        caretakerNumber: "",
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -364,6 +377,7 @@ const RemainderListScreen = ({ navigation }) => {
                         onPress={() => {
                           toggleModal();
                           setMedicineDetails({
+                            id:item._id,
                             medicineName: item.medicineName,
                             frequency: item.frequency,
                             time:new Date(item.time),
