@@ -49,7 +49,7 @@ const RemainderListScreen = ({ navigation }) => {
     pillsStock: "",
     caretakerNumber: "",
   });
-  console.log(medicineDetails?.time?.getHours());
+  // console.log(medicineDetails?.time?.getHours());
 
   const [date, setDate] = useState(new Date(3598050630000));
   const [mode, setMode] = useState("date");
@@ -216,10 +216,10 @@ const RemainderListScreen = ({ navigation }) => {
                     borderRadius: 5,
                   }}
                 >
-                  {medicineDetails.time.getHours() % 12 > 0 ? date.getHours() % 12 : 12} :{" "}
+                  {medicineDetails.time.getHours() % 12 > 0 ? medicineDetails.time.getHours() % 12 : 12} :{" "}
                   {medicineDetails.time.getMinutes() < 10
-                    ? "0" + date.getMinutes()
-                    : date.getMinutes()}{" "}
+                    ? "0" + medicineDetails.time.getMinutes()
+                    : medicineDetails.time.getMinutes()}{" "}
                   {medicineDetails.time.getHours() >= 12 ? "pm" : "am"}
                 </Text>
                 )
@@ -230,7 +230,7 @@ const RemainderListScreen = ({ navigation }) => {
                 {show && (
                   <DateTimePicker
                     testID="dateTimePicker"
-                    value={date}
+                    value={medicineDetails.time}
                     mode={mode}
                     //   is24Hour={true}
                     onChange={onChange}
@@ -325,7 +325,7 @@ const RemainderListScreen = ({ navigation }) => {
                   }}
                 />
               </View>
-              <Button title="SAVE" onPress={toggleModal} color="#00ff7f" />
+              <Button title="SAVE" onPress={editReminderHandler} color="#00ff7f" />
             </Modal>
 
             <View
