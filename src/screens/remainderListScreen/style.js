@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "900",
     fontStyle: "italic",
-    letterSpacing: 2,
+    letterSpacing: 3,
   },
   headerImage: {
     width: 180,

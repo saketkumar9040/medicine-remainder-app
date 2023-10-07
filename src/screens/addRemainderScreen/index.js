@@ -34,7 +34,7 @@ const AddRemainderScreen = ({ navigation }) => {
   // console.log(storedUserData)
 
   const [medicineName, SetMedicineName] = useState("");
-  const [frequency, setFrequency] = useState("");
+  const [frequency, setFrequency] = useState("select an option");
   const [pillsCount, setPillsCount] = useState("");
   const [pillsStock, setPillsStock] = useState("");
   const [caretakerNumber, setCaretakerNumber] = useState("");
@@ -93,7 +93,7 @@ const AddRemainderScreen = ({ navigation }) => {
       if(saveRemainder.success == true){
         SetMedicineName("");
         setDate(new Date(3598050630000));
-        setFrequency(dosesFrequencyList[0])
+        setFrequency("select an option")
         setPillsCount("");
         setPillsStock("");
         setCaretakerNumber("");
@@ -132,6 +132,7 @@ const AddRemainderScreen = ({ navigation }) => {
           </Text>
           <SelectDropdown
             data={dosesFrequencyList}
+            defaultValue={frequency}
             onSelect={(selectedItem, index) => {
               setFrequency(selectedItem);
             }}
