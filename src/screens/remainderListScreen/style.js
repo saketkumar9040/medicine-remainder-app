@@ -33,14 +33,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
   },
   medicineCardContainer: {
-    margin:5,
-    marginTop:5,
-    padding:10,
-    paddingHorizontal:20,
-    marginHorizontal:20,
-    borderWidth: .7,
+    margin: 5,
+    marginTop: 5,
+    padding: 10,
+    paddingHorizontal: 20,
+    marginHorizontal: 20,
+    borderWidth: 0.7,
     borderColor: "#fff",
-    borderRadius:10,
+    borderRadius: 10,
+  },
+  headerText: {
+    margin: 10,
+    color: "#00ff7f",
+    marginHorizontal: 20,
+    fontSize: 25,
+    fontWeight: "900",
+    fontStyle: "italic",
+    letterSpacing: 2,
   },
   headerImage: {
     width: 180,
@@ -48,23 +57,23 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     resizeMode: "center",
   },
-  medicineName:{
-    flex:1,
-    fontSize:22,
-    fontWeight:"800",
-    color:"#fff",
+  medicineName: {
+    flex: 1,
+    fontSize: 22,
+    fontWeight: "800",
+    color: "#fff",
   },
-  timing:{
-    fontSize:18,
-    fontWeight:"400",
-    color:"#fff",
-    marginVertical:10,
+  timing: {
+    fontSize: 18,
+    fontWeight: "400",
+    color: "#fff",
+    marginVertical: 10,
   },
-  frequency:{
-    fontSize:16,
-    fontWeight:"400",
-    color:"#fff",
-  }
+  frequency: {
+    fontSize: 16,
+    fontWeight: "400",
+    color: "#fff",
+  },
 });
 
 export default styles;

@@ -48,7 +48,7 @@ const RemainderListScreen = ({ navigation }) => {
           <View style={{flexDirection:"row",alignItems:"center",margin:10,}}>
 
             <Image source={headerImage} style={styles.headerImage} />
-            <Text style={{margin:10,color:"#fff",marginHorizontal:20,fontSize:25,fontWeight:"900",fontStyle:"italic"}}>REMINDERS</Text>
+            <Text style={styles.headerText}>REMINDERS</Text>
           </View>
             <FlatList
               showsVerticalScrollIndicator={false}
