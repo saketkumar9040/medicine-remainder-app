@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Entypo } from "@expo/vector-icons";
@@ -12,26 +13,31 @@ import { Entypo } from "@expo/vector-icons";
 import styles from "./style";
 import emptyScreenImage from "../../../assets/images/reminderScreenImage.png";
 import headerImage from "../../../assets/images/reminderScreenHeaderLogo.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postRequest } from "../../utils/apiCallsHandler";
 import {
   AntDesign,
   FontAwesome5,
   MaterialCommunityIcons,
 } from "@expo/vector-icons/build/Icons";
+import { setReminderData } from "../../redux/reminderSlice";
 
 const RemainderListScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const storedUserData = useSelector((state) => state.auth.userData);
   const reminderList = useSelector(state=>state.reminder.reminderData);
 
   const deleteReminder = async (id) => {
     try {
-      console.log(id)
+      const deleteReminder = await postRequest("deleteReminder",{id});
+      const fetchNewReminderList = await postRequest("getReminderList",{userId:storedUserData._id});
+      dispatch(setReminderData({reminderData:fetchNewReminderList.data}));
+      Alert.alert(`${deleteReminder.message}`);
     } catch (error) {
       console.log(error)
     }
   }
-  
+
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -39,7 +45,11 @@ const RemainderListScreen = ({ navigation }) => {
         // SHOW FLATLIST IF REMINDER LIST IS AVAILABLE IN DATABSE ===================================>
         reminderList.length > 0 ? (
           <>
+          <View style={{flexDirection:"row",alignItems:"center",margin:10,}}>
+
             <Image source={headerImage} style={styles.headerImage} />
+            <Text style={{margin:10,color:"#fff",marginHorizontal:20,fontSize:25,fontWeight:"900",fontStyle:"italic"}}>REMINDERS</Text>
+          </View>
             <FlatList
               showsVerticalScrollIndicator={false}
               data={reminderList}
