@@ -17,7 +17,7 @@ import medicineImage from "../../../assets/images/medicineImage.png";
 import styles from "./style";
 import { postRequest } from "../../utils/apiCallsHandler";
 import { useSelector,useDispatch } from "react-redux";
-import { setReminderData } from "../../redux/reminderSlice";
+import { addReminderData, setReminderData } from "../../redux/reminderSlice";
 const dosesFrequencyList = [
   "Once Daily",
   "Twice Daily",

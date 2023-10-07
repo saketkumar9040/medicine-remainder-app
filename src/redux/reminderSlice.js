@@ -17,4 +17,4 @@ const reminderSlice = createSlice({
 });
 
 export const reminderReducer = reminderSlice.reducer;
-export const { setReminderData } = reminderSlice.actions;
+export const { setReminderData,addReminderData } = reminderSlice.actions;

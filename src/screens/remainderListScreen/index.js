@@ -25,19 +25,20 @@ import { setReminderData } from "../../redux/reminderSlice";
 const RemainderListScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const storedUserData = useSelector((state) => state.auth.userData);
-  const reminderList = useSelector(state=>state.reminder.reminderData);
+  const reminderList = useSelector((state) => state.reminder.reminderData);
 
   const deleteReminder = async (id) => {
     try {
-      const deleteReminder = await postRequest("deleteReminder",{id});
-      const fetchNewReminderList = await postRequest("getReminderList",{userId:storedUserData._id});
-      dispatch(setReminderData({reminderData:fetchNewReminderList.data}));
+      const deleteReminder = await postRequest("deleteReminder", { id });
+      const fetchNewReminderList = await postRequest("getReminderList", {
+        userId: storedUserData._id,
+      });
+      dispatch(setReminderData({ reminderData: fetchNewReminderList.data }));
       Alert.alert(`${deleteReminder.message}`);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-
+  };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -45,20 +46,19 @@ const RemainderListScreen = ({ navigation }) => {
         // SHOW FLATLIST IF REMINDER LIST IS AVAILABLE IN DATABSE ===================================>
         reminderList.length > 0 ? (
           <>
-          <View style={{flexDirection:"row",alignItems:"center",margin:10,}}>
-
-            <Image source={headerImage} style={styles.headerImage} />
-            <Text style={styles.headerText}>REMINDERS</Text>
-          </View>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", margin: 10 }}
+            >
+              <Image source={headerImage} style={styles.headerImage} />
+              <Text style={styles.headerText}>REMINDERS</Text>
+            </View>
             <FlatList
+              style={{ paddingBottom: 100 }}
               showsVerticalScrollIndicator={false}
               data={reminderList}
-              renderItem={({item,index}) => {
+              renderItem={({ item, index }) => {
                 return (
-                  <View
-                    key={index}
-                    style={styles.medicineCardContainer}
-                  >
+                  <View key={index} style={styles.medicineCardContainer}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -84,15 +84,19 @@ const RemainderListScreen = ({ navigation }) => {
                       :{" "}
                       {new Date(item.time).getMinutes() < 10
                         ? `0${new Date(item.time).getMinutes()}`
-                        : new Date(item.time).getMinutes()}
-                      {" "}
+                        : new Date(item.time).getMinutes()}{" "}
                       {new Date(item.time).getHours() >= 12 ? "PM" : "AM"}
                     </Text>
                     <Text style={styles.frequency}>
                       Servings :-{"  "} {item.frequency}
                     </Text>
-                    <TouchableOpacity onPress={()=>deleteReminder(item._id)}>
-                    <AntDesign name="delete" size={30} color="red" style={{position:"absolute",bottom:0,right:0,}}/>
+                    <TouchableOpacity onPress={() => deleteReminder(item._id)}>
+                      <AntDesign
+                        name="delete"
+                        size={30}
+                        color="red"
+                        style={{ position: "absolute", bottom: 0, right: 0 }}
+                      />
                     </TouchableOpacity>
                   </View>
                 );
@@ -112,15 +116,15 @@ const RemainderListScreen = ({ navigation }) => {
               Add remainder to never miss your scheduled medicine time
             </Text>
 
-          </>
-        )
-      }
             <TouchableOpacity
               style={styles.addButtonContainer}
               onPress={() => navigation.navigate("Add Remainder")}
             >
               <Entypo name="add-to-list" size={34} color="#fff" />
             </TouchableOpacity>
+          </>
+        )
+      }
     </SafeAreaView>
   );
 };
