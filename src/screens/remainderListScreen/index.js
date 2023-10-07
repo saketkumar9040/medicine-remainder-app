@@ -6,9 +6,12 @@ import {
   TouchableOpacity,
   FlatList,
   Alert,
+  Button,
+  TextInput,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Entypo } from "@expo/vector-icons";
+import Modal from "react-native-modal";
 
 import styles from "./style";
 import emptyScreenImage from "../../../assets/images/reminderScreenImage.png";
@@ -26,6 +29,11 @@ const RemainderListScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const storedUserData = useSelector((state) => state.auth.userData);
   const reminderList = useSelector((state) => state.reminder.reminderData);
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   const deleteReminder = async (id) => {
     try {
@@ -40,12 +48,22 @@ const RemainderListScreen = ({ navigation }) => {
     }
   };
 
+  const editReminderHandler = async () => {};
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       {
         // SHOW FLATLIST IF REMINDER LIST IS AVAILABLE IN DATABSE ===================================>
         reminderList.length > 0 ? (
           <>
+            <Modal isVisible={isModalVisible}>
+              <View style={{ flex: 1,backgroundColor:"#000" }}>
+                <Text>Hello!</Text>
+                <TextInput/>
+              </View>
+                <Button title="SAVE" onPress={toggleModal} color="#00ff7f" />
+            </Modal>
+
             <View
               style={{ flexDirection: "row", alignItems: "center", margin: 10 }}
             >
@@ -74,7 +92,14 @@ const RemainderListScreen = ({ navigation }) => {
                       <Text style={styles.medicineName}>
                         {item.medicineName}
                       </Text>
-                      <FontAwesome5 name="edit" size={24} color="#00ff7f" />
+                      <TouchableOpacity
+                        onPress={() => {
+                          toggleModal();
+                          editReminderHandler();
+                        }}
+                      >
+                        <FontAwesome5 name="edit" size={24} color="#00ff7f" />
+                      </TouchableOpacity>
                     </View>
                     <Text style={styles.timing}>
                       Timing :-{"  "}{" "}
@@ -94,7 +119,7 @@ const RemainderListScreen = ({ navigation }) => {
                       <AntDesign
                         name="delete"
                         size={30}
-                        color="red"
+                        color="#EE4B2B"
                         style={{ position: "absolute", bottom: 0, right: 0 }}
                       />
                     </TouchableOpacity>
