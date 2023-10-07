@@ -10,8 +10,10 @@ import {
   TextInput,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, Feather, Ionicons } from "@expo/vector-icons";
 import Modal from "react-native-modal";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import SelectDropdown from "react-native-select-dropdown";
 
 import styles from "./style";
 import emptyScreenImage from "../../../assets/images/reminderScreenImage.png";
@@ -25,11 +27,53 @@ import {
 } from "@expo/vector-icons/build/Icons";
 import { setReminderData } from "../../redux/reminderSlice";
 
+const dosesFrequencyList = [
+  "Once Daily",
+  "Twice Daily",
+  "Thrice Daily",
+  "Weekly",
+  "Monthly",
+];
+
 const RemainderListScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const storedUserData = useSelector((state) => state.auth.userData);
   const reminderList = useSelector((state) => state.reminder.reminderData);
   const [isModalVisible, setModalVisible] = useState(false);
+
+  const [medicineDetails, setMedicineDetails] = useState({
+    medicineName: "",
+    frequency: "select an option",
+    time:"",
+    pillsCount: "",
+    pillsStock: "",
+    caretakerNumber: "",
+  });
+  console.log(medicineDetails?.time?.getHours());
+
+  const [date, setDate] = useState(new Date(3598050630000));
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+  // console.log(date);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setMedicineDetails({...medicineDetails,time:currentDate})
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const showTimepicker = () => {
+    showMode("time");
+  };
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -50,9 +94,8 @@ const RemainderListScreen = ({ navigation }) => {
 
   const editReminderHandler = async () => {
     try {
-       
     } catch (error) {
-        console.log(error.message)
+      console.log(error.message);
     }
   };
 
@@ -63,18 +106,226 @@ const RemainderListScreen = ({ navigation }) => {
         reminderList.length > 0 ? (
           <>
             <Modal isVisible={isModalVisible}>
-              <View style={{ flex: 1,backgroundColor:"#000",opacity:0.5}}>
-                <Text>Hello!</Text>
-                /* medicine  name edit */
-                <TextInput/>
-                /* frequency edit */
-                <TextInput/>
-                /* time edit */
-                <TextInput/>
-                /* caretaker number edit */
-                <TextInput/>
+              <View style={{ flex: 1, backgroundColor: "#000" }}>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: "row",
+                    alignSelf: "center",
+                    marginBottom: 20,
+                  }}
+                  onPress={toggleModal}
+                >
+                  <Feather name="x-circle" size={46} color="red" />
+                </TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: "#fff",
+                    fontWeight: "800",
+                    marginLeft: 20,
+                  }}
+                >
+                  Medicine Name
+                </Text>
+                <TextInput
+                  style={{
+                    backgroundColor: "#fff",
+                    margin: 20,
+                    padding: 5,
+                    paddingHorizontal: 20,
+                    fontSize: 20,
+                    fontWeight: "900",
+                    borderRadius: 10,
+                  }}
+                  autoCapitalize="none"
+                  value={medicineDetails.medicineName}
+                  onChangeText={(e) => {
+                    setMedicineDetails({
+                      ...medicineDetails,
+                      medicineName: e,
+                    });
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: "#fff",
+                    fontWeight: "800",
+                    marginLeft: 20,
+                  }}
+                >
+                  Pills frequency
+                </Text>
+                <SelectDropdown
+                  data={dosesFrequencyList}
+                  defaultValue={medicineDetails.frequency}
+                  onSelect={(selectedItem, index) => {
+                    setMedicineDetails({
+                      ...medicineDetails,
+                      frequency: selectedItem,
+                    });
+                  }}
+                  buttonTextAfterSelection={(selectedItem, index) => {
+                    return selectedItem;
+                  }}
+                  buttonStyle={{
+                    backgroundColor: "#fff",
+                    margin: 10,
+                    
+                    width: "90%",
+                    alignSelf: "center",
+
+                    borderRadius: 10,
+                  }}
+                  buttonTextStyle={{
+                    fontWeight: "900",
+                  }}
+                />
+
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: "#fff",
+                    fontWeight: "800",
+                    marginLeft: 20,
+                  }}
+                >
+                  Timing
+                </Text>
+                <TouchableOpacity onPress={() => showTimepicker()}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      elevation: 10,
+                      margin: 10,
+                    }}
+                  >
+              {
+                medicineDetails.time && (
+                  <Text
+                  style={{
+                    flex:1,
+                    fontSize: 18,
+                    fontWeight: "800",
+                    backgroundColor: "#fff",
+                    padding: 3,
+                    paddingHorizontal: 30,
+                    marginRight: 10,
+                    marginLeft:10,
+                    borderRadius: 5,
+                  }}
+                >
+                  {medicineDetails.time.getHours() % 12 > 0 ? date.getHours() % 12 : 12} :{" "}
+                  {medicineDetails.time.getMinutes() < 10
+                    ? "0" + date.getMinutes()
+                    : date.getMinutes()}{" "}
+                  {medicineDetails.time.getHours() >= 12 ? "pm" : "am"}
+                </Text>
+                )
+              }
+                    <Ionicons name="alarm" size={40} color="#fff" />
+                  </View>
+                </TouchableOpacity>
+                {show && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    //   is24Hour={true}
+                    onChange={onChange}
+                  />
+                )}
+
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: "#fff",
+                    fontWeight: "800",
+                    marginLeft: 20,
+                  }}
+                >
+                  Pills count
+                </Text>
+                <TextInput
+                  style={{
+                    backgroundColor: "#fff",
+                    margin: 20,
+                    padding: 5,
+                    paddingHorizontal: 20,
+                    fontSize: 20,
+                    fontWeight: "900",
+                    borderRadius: 10,
+                  }}
+                  autoCapitalize="none"
+                  value={medicineDetails.pillsCount}
+                  onChangeText={(e) => {
+                    setMedicineDetails({
+                      ...medicineDetails,
+                      pillsCount: e,
+                    });
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: "#fff",
+                    fontWeight: "800",
+                    marginLeft: 20,
+                  }}
+                >
+                  Pills stock
+                </Text>
+                <TextInput
+                  style={{
+                    backgroundColor: "#fff",
+                    margin: 20,
+                    padding: 5,
+                    paddingHorizontal: 20,
+                    fontSize: 20,
+                    fontWeight: "900",
+                    borderRadius: 10,
+                  }}
+                  autoCapitalize="none"
+                  value={medicineDetails.pillsStock}
+                  onChangeText={(e) => {
+                    setMedicineDetails({
+                      ...medicineDetails,
+                      pillsStock: e,
+                    });
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: "#fff",
+                    fontWeight: "800",
+                    marginLeft: 20,
+                  }}
+                >
+                  Caretaker number
+                </Text>
+                <TextInput
+                  style={{
+                    backgroundColor: "#fff",
+                    margin: 20,
+                    padding: 5,
+                    paddingHorizontal: 20,
+                    fontSize: 20,
+                    fontWeight: "900",
+                    borderRadius: 10,
+                  }}
+                  autoCapitalize="none"
+                  value={medicineDetails.caretakerNumber}
+                  onChangeText={(e) => {
+                    setMedicineDetails({
+                      ...medicineDetails,
+                      caretakerNumber: e,
+                    });
+                  }}
+                />
               </View>
-                <Button title="SAVE" onPress={toggleModal} color="#00ff7f" />
+              <Button title="SAVE" onPress={toggleModal} color="#00ff7f" />
             </Modal>
 
             <View
@@ -108,6 +359,14 @@ const RemainderListScreen = ({ navigation }) => {
                       <TouchableOpacity
                         onPress={() => {
                           toggleModal();
+                          setMedicineDetails({
+                            medicineName: item.medicineName,
+                            frequency: item.frequency,
+                            time:new Date(item.time),
+                            pillsCount: item.pillsCount,
+                            pillsStock: item.pillsStock,
+                            caretakerNumber: item.caretakerNumber ?? "",
+                          });
                         }}
                       >
                         <FontAwesome5 name="edit" size={24} color="#00ff7f" />
